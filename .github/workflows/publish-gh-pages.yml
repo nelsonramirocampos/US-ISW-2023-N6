@@ -1,0 +1,33 @@
+name: Deploy to GitHub Pages
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # Puedes ajustar la versión de Node.js según tus necesidades
+
+    - name: Instalar dependencias
+      run: npm install
+
+    - name: Construir sitio
+      run: npm run build # Asegúrate de que este comando genere los archivos para GitHub Pages en la carpeta correcta (por lo general, 'dist' o 'build')
+
+    - name: Publicar en GitHub Pages
+      run: |
+        git checkout gh-pages
+        git merge master
+        git push origin gh-pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
