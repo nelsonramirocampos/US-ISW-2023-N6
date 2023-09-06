@@ -6,6 +6,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
+// Importa el ícono de Material Icons
+import CheckIcon from '@mui/icons-material/Check';
+
 function PedidoConfirmado(props) {
   const { open, onClose } = props;
 
@@ -18,13 +21,16 @@ function PedidoConfirmado(props) {
       maxWidth="xs"
       PaperProps={{
         style: {
-          backgroundColor: '#4CAF50', // Verde que indica éxito
+          backgroundColor: 'rgba(76, 175, 80, 0.9)', // Verde semi-transparente que indica éxito
           textAlign: 'center',
           boxShadow: 'none', // Quita la sombra predeterminada
         },
       }}
     >
-      <DialogTitle id="pedido-confirmado-dialog-title">¡Pedido Confirmado!</DialogTitle>
+      <DialogTitle id="pedido-confirmado-dialog-title">
+        <CheckIcon style={{ fontSize: 48, color: 'white' }} /> 
+            ¡Pedido Confirmado!
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id="pedido-confirmado-dialog-description">
           Tu pedido se ha generado correctamente.
