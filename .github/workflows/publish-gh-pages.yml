@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+permissions:
+  contents: write # Concede permisos de escritura
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -28,7 +31,6 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@4.1.6
       with:
         branch: gh-pages
-        folder: build # Carpeta que contiene los archivos para publicar
-        commit_message: "Auto-deployed by GitHub Actions"
+        folder: dist # Carpeta que contiene los archivos para publicar
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
