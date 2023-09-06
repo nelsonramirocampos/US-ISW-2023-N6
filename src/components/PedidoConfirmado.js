@@ -9,6 +9,12 @@ import Button from '@mui/material/Button';
 // Importa el ícono de Material Icons
 import CheckIcon from '@mui/icons-material/Check';
 
+/**
+ * Componente que muestra un diálogo de confirmación de pedido exitoso.
+ * @param {Object} props - Las propiedades del componente.
+ * @param {boolean} props.open - Determina si el diálogo está abierto o cerrado.
+ * @param {function} props.onClose - Función para cerrar el diálogo.
+ */
 function PedidoConfirmado(props) {
   const { open, onClose } = props;
 
@@ -21,15 +27,14 @@ function PedidoConfirmado(props) {
       maxWidth="xs"
       PaperProps={{
         style: {
-          backgroundColor: 'rgba(76, 175, 80, 0.9)', // Verde semi-transparente que indica éxito
+          backgroundColor: 'rgba(76, 175, 80, 0.8)', // Verde semi-transparente que indica éxito
           textAlign: 'center',
           boxShadow: 'none', // Quita la sombra predeterminada
         },
       }}
     >
       <DialogTitle id="pedido-confirmado-dialog-title">
-        <CheckIcon style={{ fontSize: 48, color: 'white' }} /> 
-            ¡Pedido Confirmado!
+        <CheckIcon style={{ fontSize: 48, color: 'white' }} /> ¡Pedido Confirmado!
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="pedido-confirmado-dialog-description">
