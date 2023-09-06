@@ -1,5 +1,5 @@
 import React from 'react';
-import Formulario from './components/Formulario'; // Asegúrate de proporcionar la ruta correcta a tu componente Formulario
+import Formulario from './components/FormularioPedido';
 import Header from './components/Header';
 import Footer from './components/Footer';
 

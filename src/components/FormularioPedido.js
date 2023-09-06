@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
-import FormaPago from './FormaPago';
-import DatosEnvio from './DatosEnvio';
+import FormaPago from './secciones/forma-pago/SeccionFormaPago';
+import DatosEnvio from './secciones/SeccionDatosEnvio';
 import PedidoConfirmado from './PedidoConfirmado';
 
 function Formulario() {
@@ -39,7 +39,7 @@ function Formulario() {
 
   return (
     <div>
-      <h2>Formulario de Configuración de Pedido</h2>
+      <h2>Formulario de Confirmación de Pedido</h2>
       {!pedidoConfirmado ? (
         <div>
           {/* Componente para ingresar los datos de envío */}
