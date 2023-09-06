@@ -39,7 +39,7 @@ function Formulario() {
 
   return (
     <div>
-      <h2>Formulario de Envío</h2>
+      <h2>Formulario de Configuración de Pedido</h2>
       {!pedidoConfirmado ? (
         <div>
           {/* Componente para ingresar los datos de envío */}
@@ -56,7 +56,7 @@ function Formulario() {
             disabled={!isPaymentDataValid || !isShippingDataValid}
             onClick={handleEnviarClick} // Agrega el manejador onClick
           >
-            Enviar
+            Confirmar Pedido
           </Button>
         </div>
       ) : (
