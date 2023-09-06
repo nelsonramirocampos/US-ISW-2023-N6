@@ -28,7 +28,7 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@4.1.6
       with:
         branch: gh-pages
-        folder: dist # Carpeta que contiene los archivos para publicar
+        folder: build # Carpeta que contiene los archivos para publicar
         commit_message: "Auto-deployed by GitHub Actions"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
