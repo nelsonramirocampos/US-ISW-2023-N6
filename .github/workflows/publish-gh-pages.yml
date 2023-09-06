@@ -26,7 +26,7 @@ jobs:
 
     - name: Publicar en GitHub Pages
       run: |
-        git checkout gh-pages
+        git checkout -b gh-pages origin/gh-pages
         git merge master
         git push origin gh-pages
       env:
