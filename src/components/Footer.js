@@ -14,7 +14,7 @@ const Footer = () => {
         marginTop: 'auto',
       }}
     >
-      <Typography variant="body1">© 2023 Mi Aplicación. Todos los derechos reservados.</Typography>
+      <Typography variant="body1">© 2023 DeliveryEat!. Todos los derechos reservados.</Typography>
     </Box>
   );
 };
