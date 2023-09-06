@@ -1,7 +1,7 @@
 name: Deploy to GitHub Pages
 
 on:
-  pull_request:
+  push:
     branches:
       - master
 
@@ -24,23 +24,11 @@ jobs:
     - name: Construir sitio
       run: npm run build # Asegúrate de que este comando genere los archivos para GitHub Pages en la carpeta correcta (por lo general, 'dist' o 'build')
 
-    - name: Ramas remotas
-      run: git branch -r
-
-    - name: Crear rama local gh-pages basada en la rama remota
-      run: |
-        git checkout -b gh-pages
-        git branch --set-upstream-to=origin/gh-pages
-        git pull
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Fusionar cambios de master en la rama gh-pages
-      run: git merge master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Empujar cambios a la rama gh-pages en el repositorio remoto
-      run: git push origin gh-pages
+    - name: Publicar en GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.6
+      with:
+        branch: gh-pages
+        folder: dist # Carpeta que contiene los archivos para publicar
+        commit_message: "Auto-deployed by GitHub Actions"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
