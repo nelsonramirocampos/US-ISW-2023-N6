@@ -106,9 +106,12 @@ function DatosEnvio({ onChangeDatosEnvio }) {
             error={Boolean(ciudadError)}
           >
             {/* Opciones de ciudades */}
-            <MenuItem value="Ciudad A">Ciudad A</MenuItem>
-            <MenuItem value="Ciudad B">Ciudad B</MenuItem>
-            <MenuItem value="Ciudad C">Ciudad C</MenuItem>
+            <MenuItem value="CO">Cosquin</MenuItem>
+            <MenuItem value="MC">Mina Clavero</MenuItem>
+            <MenuItem value="NO">Nono</MenuItem>
+            <MenuItem value="SRC">Santa Rosa de Calamuchita</MenuItem>
+            <MenuItem value="VCP">Villa Carlos Paz</MenuItem>
+            <MenuItem value="VGB">Villa General Belgrano</MenuItem>
           </Select>
           {/* Mensaje de error para la ciudad */}
           {ciudadError && (
