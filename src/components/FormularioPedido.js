@@ -4,6 +4,7 @@ import FormaPago from './secciones/forma-pago/SeccionFormaPago';
 import DatosEnvio from './secciones/SeccionDatosEnvio';
 import PedidoConfirmado from './PedidoConfirmado';
 import SeccionRecibimiento from './secciones/SeccionRecibimiento';
+import SeccionCarritoPedido from './secciones/SeccionCarritoPedido';
 
 function Formulario() {
   // Estados para controlar la validez de los datos de FormaPago y DatosEnvio
@@ -66,6 +67,8 @@ function Formulario() {
   return (
     <div>
       <h2>Formulario de Confirmación de Pedido</h2>
+
+      <SeccionCarritoPedido />
       {pedidoConfirmado ? (
         // Condicional ternario para mostrar el pop-up o el formulario
         <PedidoConfirmado onClose={handleCloseDialog} />
