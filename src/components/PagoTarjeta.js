@@ -15,16 +15,19 @@ function PagoTarjeta( { onCardNumberBlur, onCardHolderNameBlur, onExpirationMont
   const [cvvError, setCvvError] = useState('');
 
   const handleCardNumberBlur = () => {
-    if(cardNumber.length < 16)
-    {
-        setCardNumberError('El número de tarjeta debe ser de 16 digitos');
-        onCardNumberBlur('');
-    }
-    else{
-        setCardNumberError('');
-        onCardNumberBlur(cardNumber)
+    if (cardNumber.length !== 16) {
+      setCardNumberError('El número de tarjeta debe ser de 16 dígitos');
+      onCardNumberBlur('');
+    } else if (!/^4/.test(cardNumber)) {
+      // Verifica si el número de tarjeta comienza con "4", que es el prefijo de Visa.
+      setCardNumberError('Solo se aceptan tarjetas Visa');
+      onCardNumberBlur('');
+    } else {
+      setCardNumberError('');
+      onCardNumberBlur(cardNumber);
     }
   };
+  
 
   const valueCardNumber = (e) => {
     const inputValue = e.target.value;
@@ -41,7 +44,7 @@ function PagoTarjeta( { onCardNumberBlur, onCardHolderNameBlur, onExpirationMont
       setCardNumberError('');
     } else {
       // Si la entrada no es válida, mostramos un mensaje de error.
-      setCardNumberError('Número de tarjeta inválido');
+      setCardNumberError('El número de tarjeta solo puede contener hasta 16 digitos.');
     }
   };
     
