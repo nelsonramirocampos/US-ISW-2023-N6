@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Typography, Divider, FormControl, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import {
+  Paper,
+  Typography,
+  Divider,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+} from '@mui/material';
 import PagoEfectivo from './PagoEfectivo';
 import PagoTarjeta from './PagoTarjeta';
 
@@ -81,8 +89,8 @@ function FormaPago({ onChangeFormaPago }) {
   }, [isPaymentDataValid, onChangeFormaPago]);
 
   return (
-    <Paper elevation={3} style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
-      <Typography variant="h6" gutterBottom>
+    <Paper elevation={3} style={{ padding: '16px' }}> {/* Utiliza un Paper para envolver el contenido */}
+      <Typography variant="h5" gutterBottom>
         Forma de Pago
       </Typography>
       <Divider style={{ marginBottom: '20px' }} />

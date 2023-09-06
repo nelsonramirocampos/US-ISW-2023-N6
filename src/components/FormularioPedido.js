@@ -3,13 +3,14 @@ import Button from '@mui/material/Button';
 import FormaPago from './secciones/forma-pago/SeccionFormaPago';
 import DatosEnvio from './secciones/SeccionDatosEnvio';
 import PedidoConfirmado from './PedidoConfirmado';
+import SeccionRecibimiento from './secciones/SeccionRecibimiento';
 
 function Formulario() {
   // Estados para controlar la validez de los datos de FormaPago y DatosEnvio
   const [isPaymentDataValid, setIsPaymentDataValid] = useState(false);
   const [isShippingDataValid, setIsShippingDataValid] = useState(false);
   
-  // estado para mostrar el Pedido Confirmado
+  // Estado para mostrar el Pedido Confirmado
   const [pedidoConfirmado, setPedidoConfirmado] = useState(false);
 
   // Función para manejar el cambio en la validez de los datos de FormaPago
@@ -17,7 +18,7 @@ function Formulario() {
     setIsPaymentDataValid(isValid);
   };
 
-  // Función para manejar el cambio en la validez de los datos de DatosEnvio
+  // Función para manejar el cambio en la validez de los datos de DatosEnvío
   const handleShippingDataChange = (isValid) => {
     setIsShippingDataValid(isValid);
   };
@@ -36,7 +37,6 @@ function Formulario() {
     }
   };
 
-
   return (
     <div>
       <h2>Formulario de Confirmación de Pedido</h2>
@@ -44,17 +44,22 @@ function Formulario() {
         <div>
           {/* Componente para ingresar los datos de envío */}
           <DatosEnvio onChangeDatosEnvio={handleShippingDataChange} />
+
+          <SeccionRecibimiento />
+
           {/* Componente para seleccionar la forma de pago */}
           <FormaPago
             onChangeFormaPago={handlePaymentDataChange}
             onPedidoConfirmado={handlePedidoConfirmado}
           />
+
           {/* Botón para enviar el formulario */}
           <Button
             variant="contained"
             color="primary"
             disabled={!isPaymentDataValid || !isShippingDataValid}
-            onClick={handleEnviarClick} // Agrega el manejador onClick
+            onClick={handleEnviarClick}
+            style={{ width: '100%' }} // Establece el ancho al 100%
           >
             Confirmar Pedido
           </Button>
