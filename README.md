@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+# DeliveryEat! Servicio de delivery de "lo que sea"
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+DeliverEat! es una aplicación de delivery que ofrece la conveniencia de pedir una amplia variedad de productos desde restaurantes, farmacias, tiendas de ropa, tecnología y más, y los entrega directamente en el domicilio del usuario. Su objetivo es facilitar la vida de las personas al proporcionar un servicio de entrega rápido y eficiente para todo tipo de necesidades, eliminando la necesidad de visitar físicamente los establecimientos.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Requisitos
 
-### `npm start`
+Asegúrate de tener los siguientes requisitos instalados en tu sistema antes de trabajar con este proyecto:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Node.js**: Este proyecto utiliza Node.js para ejecutar scripts y gestionar dependencias. Puedes descargarlo desde [la página oficial de Node.js](https://nodejs.org/). Para verificar si Node.js está instalado en tu sistema y ver su versión, ejecuta el siguiente comando en tu terminal:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+   ```bash
+   node -v
+   ```
 
-### `npm test`
+   Esto mostrará la versión de Node.js si está instalada. Si no lo está, sigue el enlace anterior para descargar e instalar Node.js.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **npm**: npm es el administrador de paquetes de Node.js y se instala automáticamente junto con Node.js. Para verificar la versión de npm, ejecuta el siguiente comando en tu terminal:
 
-### `npm run build`
+   ```bash
+   npm -v
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   Esto mostrará la versión de npm si está instalada. Si no lo está, debería instalarse automáticamente junto con Node.js.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Git**: Git es necesario para clonar y gestionar repositorios de GitHub. Si aún no tienes Git instalado, puedes descargarlo desde [la página oficial de Git](https://git-scm.com/). Para verificar si Git está instalado en tu sistema y ver su versión, ejecuta el siguiente comando en tu terminal:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   git --version
+   ```
 
-### `npm run eject`
+   Esto mostrará la versión de Git si está instalada. Si no lo está, sigue el enlace anterior para descargar e instalar Git.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Uso
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Para utilizar este proyecto, sigue estos pasos:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Clona este repositorio en tu máquina local:
 
-## Learn More
+   ```bash
+   git clone https://github.com/nelsonramirocampos/US-ISW-2023-N6.git
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Navega al directorio del proyecto:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```bash
+   cd US-ISW-2023-N6
+   ```
 
-### Code Splitting
+3. Instala las dependencias necesarias:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   ```bash
+   npm install
+   ```
 
-### Analyzing the Bundle Size
+4. Inicia la aplicación en modo de desarrollo:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+   ```bash
+   npm start
+   ```
 
-### Making a Progressive Web App
+La aplicación se abrirá automáticamente en tu navegador predeterminado. Puedes realizar cambios en el código fuente en la carpeta `src` y ver los cambios en tiempo real mientras la aplicación se ejecuta en modo de desarrollo.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Publicar en GitHub Pages
 
-### Advanced Configuration
+Para publicar tu proyecto en GitHub Pages y compartirlo con otros, sigue estos pasos:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. Asegúrate de que tienes una rama llamada `gh-pages` en tu repositorio. Si no la tienes, crea una:
 
-### Deployment
+   ```bash
+   git checkout -b gh-pages
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+2. Compila la aplicación para producción:
 
-### `npm run build` fails to minify
+   ```bash
+   npm run predeploy
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   Esto generará una carpeta llamada `build` en la raíz del proyecto.
+
+4. Publica la rama `gh-pages` en GitHub:
+
+   ```bash
+      npm run deploy
+   ```
+
+   Tu proyecto estará disponible en GitHub Pages en la siguiente URL: https://nelsonramirocampos.github.io/US-ISW-2023-N6
+
+## Mantener Actualizado GitHub Pages
+
+Si realizas cambios en la rama `master` y deseas actualizar GitHub Pages, sigue estos pasos:
+
+1. Cambia a la rama `gh-pages`:
+
+   ```bash
+   git checkout gh-pages
+   ```
+
+2. Fusiona los cambios de la rama `master` en la rama `gh-pages`:
+
+   ```bash
+   git merge master
+   ```
+
+3. Compila nuevamente la aplicación para producción:
+
+   ```bash
+   npm run predeploy
+   ```
+
+4. Publica la rama `gh-pages` en GitHub:
+
+   ```bash
+      npm run deploy
+   ```
+
+
+Ahora, tu proyecto estará actualizado en GitHub Pages con los cambios de la rama `master`.
