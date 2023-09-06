@@ -64,9 +64,10 @@ function DatosEnvio({ onChangeDatosEnvio }) {
   return (
     // Componente que muestra los datos de envío y errores
     <Paper elevation={3} style={{ padding: '16px' }}>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h5" gutterBottom>
         Ingresa los datos donde enviaremos tú pedido
       </Typography>
+
       <FormGroup>
         {/* Campo de entrada para la calle */}
         <TextField
