@@ -18,6 +18,11 @@ import CheckIcon from '@mui/icons-material/Check';
 function PedidoConfirmado(props) {
   const { open, onClose } = props;
 
+  // Estilo CSS para hacer que el texto sea negro
+  const textoNegroStyle = {
+    color: 'black',
+  };
+
   return (
     <Dialog
       open={open}
@@ -34,14 +39,15 @@ function PedidoConfirmado(props) {
       }}
     >
       <DialogTitle id="pedido-confirmado-dialog-title">
-        <CheckIcon style={{ fontSize: 48, color: 'white' }} /> ¡Pedido Confirmado!
+        <CheckIcon style={{ fontSize: 48, color: 'white' }} />{' '}
+        <span style={textoNegroStyle}>¡Pedido Confirmado!</span>
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="pedido-confirmado-dialog-description">
-          Tu pedido se ha generado correctamente.
+          <span style={textoNegroStyle}>Tu pedido se ha generado correctamente.</span>
         </DialogContentText>
         <DialogContentText id="pedido-confirmado-dialog-description-dos">
-          ¡Gracias por elegirnos!
+          <span style={textoNegroStyle}>¡Gracias por elegirnos!</span>
         </DialogContentText>
       </DialogContent>
       <DialogActions style={{ justifyContent: 'center' }}>
