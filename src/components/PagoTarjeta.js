@@ -44,7 +44,7 @@ function PagoTarjeta( { onCardNumberBlur, onCardHolderNameBlur, onExpirationMont
       setCardNumberError('');
     } else {
       // Si la entrada no es válida, mostramos un mensaje de error.
-      setCardNumberError('Número de tarjeta inválido');
+      setCardNumberError('El número de tarjeta solo puede contener hasta 16 digitos.');
     }
   };
     
