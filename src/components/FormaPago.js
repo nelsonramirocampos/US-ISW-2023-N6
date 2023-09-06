@@ -61,7 +61,7 @@ function FormaPago({ onChangeFormaPago }) {
   // Función para validar los datos de pago
   const validatePaymentData = () => {
     if (
-      (selectedPaymentOption === 'efectivo' && amount.trim() !== '') || // Validación para pago en efectivo
+      (selectedPaymentOption === 'efectivo' && amount !== '') || // Validación para pago en efectivo
       (selectedPaymentOption === 'tarjeta' && // Validación para pago con tarjeta
         cardNumber.trim() !== '' &&
         cardHolderName.trim() !== '' &&
