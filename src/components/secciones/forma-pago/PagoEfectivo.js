@@ -2,33 +2,70 @@ import { InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 
+
 function PagoEfectivo({ onAmountBlur }) {
   // Estado local para el monto y el error del monto
   const [amount, setAmount] = useState('');
   const [amountError, setAmountError] = useState('');
 
-  // Manejador para el cambio de valor en el campo de entrada
-  const handleChange = (values) => {
-    const { floatValue, value } = values;
-
-    if (value.trim() === '') {
-      setAmountError('Este campo no puede quedar vacío');
-    } else if (floatValue <= 0) {
-      setAmountError('El monto a abonar debe ser mayor a cero');
-    } else {
-      setAmountError('');
-      onAmountBlur(floatValue); // Llama a la función proporcionada desde el componente padre
-    }
-
-    setAmount(value); // Actualiza el valor incluso si es una cadena vacía
+  /**
+   * Validación: No se permite dejar el campo vacío.
+   * 
+   * @param {string} value - El valor del campo.
+   * @returns {boolean} - Verdadero si el valor no está vacío, falso en caso contrario.
+   */
+  const validateNotEmpty = (value) => {
+    return value.trim() !== '';
   };
 
-  // Manejador para el evento onBlur del campo de entrada
-  const handleBlur = () => {
-    if (amount === '') {
-      setAmountError('Este campo no puede quedar vacío');
-    } else if (!isNaN(parseFloat(amount))) {
-      setAmount(parseFloat(amount).toFixed(2)); // Formatea el valor a dos decimales si es numérico
+  /**
+   * Validación: Debe ser un número positivo.
+   * 
+   * @param {string} value - El valor del campo.
+   * @returns {boolean} - Verdadero si el valor es un número positivo, falso en caso contrario.
+   */
+  const validatePositiveNumber = (value) => {
+    const floatValue = parseFloat(value);
+    return !isNaN(floatValue) && floatValue > 0;
+  };
+
+  /**
+   * Validación: Debe ser menor o igual a 100.000.
+   * 
+   * @param {string} value - El valor del campo.
+   * @returns {boolean} - Verdadero si el valor es menor o igual a 100.000, falso en caso contrario.
+   */
+  const validateMaxValue = (value) => {
+    const floatValue = parseFloat(value);
+    return !isNaN(floatValue) && floatValue <= 100000;
+  };
+
+  /**
+   * Función de validación principal.
+   * 
+   * @param {object} values - Objeto que contiene el valor actual del campo.
+   */
+  const handleAmountChange = (values) => {
+    const value = values.value;
+
+    let error = '';
+
+    if (!validateNotEmpty(value)) {
+      error = 'No deje el campo vacío';
+    } else if (!validatePositiveNumber(value)) {
+      error = 'Ingrese un número positivo mayor que cero';
+    } else if (!validateMaxValue(value)) {
+      error = 'Ingrese un valor menor o igual a $100.000';
+    }
+
+    setAmountError(error);
+    setAmount(value);
+
+    // Llamar a onAmountBlur con el valor correcto
+    if (error) {
+      onAmountBlur('');
+    } else {
+      onAmountBlur(value);
     }
   };
 
@@ -46,13 +83,12 @@ function PagoEfectivo({ onAmountBlur }) {
     <div>
       <NumericFormat
         customInput={TextField}
-        onValueChange={handleChange}
-        onBlur={handleBlur} // Agrega el manejador onBlur para formatear el valor en caso de ser numérico
         thousandSeparator="."
         decimalSeparator=","
-        decimalScale={2} // Establece la cantidad de decimales a 2
+        decimalScale={2}
         {...materialUiTextFieldProps}
-        value={amount} // Asigna el valor directamente
+        value={amount}
+        onValueChange={handleAmountChange}
         error={Boolean(amountError)}
         helperText={amountError}
       />
