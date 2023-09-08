@@ -1,11 +1,10 @@
 import { InputAdornment, TextField } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NumericFormat } from "react-number-format";
 
-
-function PagoEfectivo({ onAmountBlur }) {
+function PagoEfectivo({ onAmountBlur, total }) {
   // Estado local para el monto y el error del monto
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState(total.toString()); // Inicializa el estado con el valor total
   const [amountError, setAmountError] = useState('');
 
   /**
@@ -56,6 +55,8 @@ function PagoEfectivo({ onAmountBlur }) {
       error = 'Ingrese un número positivo mayor que cero';
     } else if (!validateMaxValue(value)) {
       error = 'Ingrese un valor menor o igual a $100.000';
+    } else if (parseFloat(value) < total) {
+      error = 'El monto debe ser igual o mayor al total';
     }
 
     setAmountError(error);
@@ -78,6 +79,11 @@ function PagoEfectivo({ onAmountBlur }) {
       startAdornment: <InputAdornment position="start">$</InputAdornment>,
     },
   };
+
+  // Efecto secundario para actualizar el estado del monto cuando cambia el total
+  useEffect(() => {
+    setAmount(total.toString());
+  }, [total]);
 
   return (
     <div>

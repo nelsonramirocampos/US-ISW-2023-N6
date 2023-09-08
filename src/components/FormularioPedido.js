@@ -10,6 +10,9 @@ function Formulario() {
   // Estados para controlar la validez de los datos de FormaPago y DatosEnvio
   const [isPaymentDataValid, setIsPaymentDataValid] = useState(false);
   const [isShippingDataValid, setIsShippingDataValid] = useState(false);
+    // Estado para mantener el total
+    const [total, setTotal] = useState(0);
+
 
   // Estado para controlar la apertura del diálogo de confirmación
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -37,6 +40,12 @@ function Formulario() {
     setDialogOpen(true);
   };
 
+    // Función para manejar el cambio en el total
+    const handleTotalChange = (newTotal) => {
+      setTotal(newTotal);
+    };
+
+    
   // Función para cerrar el diálogo de confirmación
   const handleCloseDialog = () => {
     // Restablece los estados y cierra el diálogo
@@ -51,7 +60,8 @@ function Formulario() {
     <div>
       <h2>Formulario de Confirmación de Pedido</h2>
 
-      <SeccionCarritoPedido />
+      <SeccionCarritoPedido onTotalChange={handleTotalChange}/>
+
       {pedidoConfirmado ? (
         // Condicional ternario para mostrar el pop-up o el formulario
         <PedidoConfirmado onClose={handleCloseDialog} />
@@ -66,6 +76,7 @@ function Formulario() {
           <FormaPago
             onChangeFormaPago={handlePaymentDataChange}
             onPedidoConfirmado={handlePedidoConfirmado}
+            total={total}
           />
 
           {/* Botón para enviar el formulario */}

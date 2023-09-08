@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function SeccionCarritoPedido() {
+function SeccionCarritoPedido({ onTotalChange }) {
   // Estado para mantener los productos en el carrito
   const [productos, setProductos] = useState([
     { id: 1, nombre: 'Lomito con Chimi', cantidad: 2, precioUnitario: 10 },
@@ -28,11 +28,16 @@ function SeccionCarritoPedido() {
   };
 
   // Función para calcular el total a abonar
-  const calcularTotal = () => {
+  const calcularTotal = useCallback(() => {
     return productos.reduce((total, producto) => {
       return total + producto.cantidad * producto.precioUnitario;
     }, 0);
-  };
+  }, [productos]);
+
+  useEffect(() => {
+    const total = calcularTotal();
+    onTotalChange(total); // Llama a la función con el total calculado después de la renderización
+  }, [productos, onTotalChange, calcularTotal]);
 
   return (
     <Paper elevation={3} style={{ padding: '16px' }}>
@@ -42,10 +47,10 @@ function SeccionCarritoPedido() {
       <Divider style={{ marginBottom: '20px' }} />
 
       <TableContainer component={Paper}>
-        <Table size="small"> {/* Establece el tamaño de la tabla como pequeño */}
+        <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Producto</TableCell> {/* Cambio de "Nombre" a "Producto" */}
+              <TableCell>Producto</TableCell>
               <TableCell>Cantidad</TableCell>
               <TableCell>Precio Unitario</TableCell>
               <TableCell>Total</TableCell>

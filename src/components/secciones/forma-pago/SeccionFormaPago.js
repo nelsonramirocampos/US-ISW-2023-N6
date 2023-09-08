@@ -11,7 +11,7 @@ import {
 import PagoEfectivo from './PagoEfectivo';
 import PagoTarjeta from './PagoTarjeta';
 
-function FormaPago({ onChangeFormaPago }) {
+function FormaPago({ onChangeFormaPago, total }) {
   // Estado local para la opción seleccionada, datos de tarjeta y monto
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('efectivo');
   const [cardNumber, setCardNumber] = useState('');
@@ -117,7 +117,7 @@ function FormaPago({ onChangeFormaPago }) {
       </FormControl>
 
       {selectedPaymentOption === 'efectivo' && (
-        <PagoEfectivo onAmountBlur={handleAmountBlur} />
+        <PagoEfectivo onAmountBlur={handleAmountBlur} total={total}/>
       )}
       {selectedPaymentOption === 'tarjeta' && (
         <PagoTarjeta
