@@ -1,35 +1,37 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import 'dayjs/locale/es'; // Importa el idioma español
-import dayjs from 'dayjs';
+import * as React from 'react'; // Importa React y sus módulos
+import { useState, useEffect } from 'react'; // Importa useState y useEffect de React
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // Importa el adaptador para el componente DatePicker
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'; // Importa el proveedor de localización
+import { DatePicker } from '@mui/x-date-pickers'; // Importa el componente DatePicker
+import Radio from '@mui/material/Radio'; // Importa el componente Radio de Material-UI
+import RadioGroup from '@mui/material/RadioGroup'; // Importa el componente RadioGroup de Material-UI
+import FormControlLabel from '@mui/material/FormControlLabel'; // Importa el componente FormControlLabel de Material-UI
+import Paper from '@mui/material/Paper'; // Importa el componente Paper de Material-UI
+import Typography from '@mui/material/Typography'; // Importa el componente Typography de Material-UI
+import 'dayjs/locale/es'; // Importa el idioma español para Dayjs
+import dayjs from 'dayjs'; // Importa la librería Dayjs
 
-import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material'; // Importa componentes de Material-UI
 
 export default function SeccionRecibimiento() {
-  const [isDatePickerEnabled, setIsDatePickerEnabled] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedHour, setSelectedHour] = useState(8);
-  const [availableHours, setAvailableHours] = useState([]);
+  const [isDatePickerEnabled, setIsDatePickerEnabled] = useState(false); // Estado para habilitar/deshabilitar el DatePicker
+  const [selectedDate, setSelectedDate] = useState(null); // Estado para almacenar la fecha seleccionada
+  const [selectedHour, setSelectedHour] = useState(8); // Estado para almacenar la hora seleccionada (inicializada en 8)
+  const [availableHours, setAvailableHours] = useState([]); // Estado para almacenar las horas disponibles
 
-
+  // Función para manejar el cambio de opción en el RadioGroup
   const handleRadioChange = (event) => {
-    setIsDatePickerEnabled(event.target.value === 'enable');
+    setIsDatePickerEnabled(event.target.value === 'enable'); // Habilita o deshabilita el DatePicker según la opción seleccionada
   };
 
+  // Función para manejar el cambio de fecha en el DatePicker
   const handleDateChange = (newDate) => {
-    setSelectedDate(newDate);
+    setSelectedDate(newDate); // Actualiza el estado de la fecha seleccionada
   };
 
+  // Función para manejar el cambio de hora en el Select
   const handleHourChange = (event) => {
-    setSelectedHour(parseInt(event.target.value, 10));
+    setSelectedHour(parseInt(event.target.value, 10)); // Actualiza el estado de la hora seleccionada
   };
 
   // Función para verificar si es domingo
@@ -42,16 +44,22 @@ export default function SeccionRecibimiento() {
     return isSunday(date);
   };
 
-  // Horas disponibles (de 8 a 23)
-  //const hoursAvailable = Array.from({ length: 16 }, (_, i) => i + 8);
-
+  // Efecto secundario que se ejecuta una vez al montar el componente
   useEffect(() => {
     setSelectedDate(dayjs().add(1, 'day')); // Actualiza la fecha actual cuando cambia el estado
     const currentHour = dayjs().hour();
-    const nextThreeHours = Array.from({ length: 3 }, (_, i) => currentHour + i + 1);
-    setAvailableHours(nextThreeHours);
-    setSelectedHour(nextThreeHours[0]); // Establece la hora seleccionada inicialmente
-  }, []); // El array vacío asegura que se ejecute solo una vez al montar el componente
+    const minHour = 8; // Hora mínima permitida (08:00)
+    const maxHour = 23; // Hora máxima permitida (23:00)
+
+    // Calcula las horas disponibles dentro del rango
+    const availableHours = Array.from({ length: maxHour - currentHour + 1 }, (_, i) => {
+      const hour = currentHour + i;
+      return hour >= minHour ? hour : null; // Filtra las horas fuera del rango
+    }).filter(hour => hour !== null);
+
+    setAvailableHours(availableHours);
+    setSelectedHour(availableHours[0]); // Establece la hora seleccionada inicialmente
+  }, []);
 
   return (
     <Paper elevation={3} style={{ padding: '16px' }}>
