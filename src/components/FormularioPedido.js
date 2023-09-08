@@ -32,23 +32,6 @@ function Formulario() {
     setPedidoConfirmado(true);
   };
 
-  // Función para manejar el clic en el botón "Salir" del pop-up
-  const handleSalirClick = () => {
-    // Restablece los estados y cierra el diálogo
-    setIsPaymentDataValid(false);
-    setIsShippingDataValid(false);
-    setDialogOpen(false);
-    // Recarga la página
-    window.location.reload();
-  };
-
-  // Función para manejar el clic en el botón "Enviar" del formulario
-  const handleEnviarClick = () => {
-    if (isPaymentDataValid && isShippingDataValid) {
-      setPedidoConfirmado(true);
-    }
-  };
-
   // Función para abrir el diálogo de confirmación
   const handleOpenDialog = () => {
     setDialogOpen(true);
