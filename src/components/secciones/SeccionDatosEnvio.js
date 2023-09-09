@@ -87,12 +87,12 @@ function DatosEnvio({ onChangeDatosEnvio }) {
         {/* Campo de entrada para el número */}
         <TextField
           required
-          label="Número"
+          label="Número/Altura"
           variant="outlined"
           fullWidth
-          type="number"
+          type="text"
           value={numero}
-          onChange={(e) => setNumero(e.target.value)}
+          onChange={(e) => setNumero(e.target.value.replace(/\D/g, '').slice(0, 6))}
           onBlur={handleNumeroBlur}
           error={Boolean(numeroError)}
           helperText={numeroError}
