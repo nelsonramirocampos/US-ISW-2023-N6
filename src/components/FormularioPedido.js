@@ -42,8 +42,8 @@ function Formulario() {
   };
 
   return (
-    <div style={{ textAlign: 'center' }}>
-      <h1 style={{ fontSize: '24px' }}>Completa los datos de tú Pedido</h1>
+    <div>
+      <h1 align="center" style={{ fontSize: '24px' }}>Completa los datos de tú Pedido</h1>
 
       <SeccionCarritoPedido
         onTotalChange={handleTotalChange}
