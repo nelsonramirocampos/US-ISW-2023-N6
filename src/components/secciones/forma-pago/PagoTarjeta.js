@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import TextField from "@mui/material/TextField";
 
-function PagoTarjeta( { onCardNumberBlur, onCardHolderNameBlur, onExpirationMonthBlur, onExpirationYearBlur, onCvvBlur } ) {
+function PagoTarjeta({ onPaymentDataValidChange }) {
+  // Estados locales para los campos de la tarjeta y errores
   const [cardNumber, setCardNumber] = useState('');
   const [cardName, setCardName] = useState('');
   const [expiryMonth, setExpiryMonth] = useState('');
@@ -14,159 +15,82 @@ function PagoTarjeta( { onCardNumberBlur, onCardHolderNameBlur, onExpirationMont
   const [expiryYearError, setExpiryYearError] = useState('');
   const [cvvError, setCvvError] = useState('');
 
+  // Maneja el evento onBlur para el número de tarjeta
   const handleCardNumberBlur = () => {
     if (cardNumber.length !== 16) {
       setCardNumberError('El número de tarjeta debe ser de 16 dígitos');
-      onCardNumberBlur('');
     } else if (!/^4/.test(cardNumber)) {
-      // Verifica si el número de tarjeta comienza con "4", que es el prefijo de Visa.
       setCardNumberError('Solo se aceptan tarjetas Visa');
-      onCardNumberBlur('');
     } else {
       setCardNumberError('');
-      onCardNumberBlur(cardNumber);
     }
-  };
-  
 
-  const valueCardNumber = (e) => {
-    const inputValue = e.target.value;
-    const cardNumberWithoutSpaces = inputValue.replace(/\s+/g, ''); // Elimina espacios en blanco
-    const regex = /^[0-9\b]+$/;
-    
-    if (inputValue === '') {
-      // Si el campo está vacío, no mostramos error.
-      setCardNumber(cardNumberWithoutSpaces);
-      setCardNumberError('');
-    } else if (regex.test(cardNumberWithoutSpaces) && cardNumberWithoutSpaces.length <= 16) {
-      // Si la entrada es válida y no supera los 16 dígitos, no mostramos error.
-      setCardNumber(cardNumberWithoutSpaces);
-      setCardNumberError('');
-    } else {
-      // Si la entrada no es válida, mostramos un mensaje de error.
-      setCardNumberError('El número de tarjeta solo puede contener hasta 16 digitos.');
-    }
+    validateData();
   };
-    
-  
+
+  // Maneja el evento onBlur para el nombre del titular
   const handleCardNameBlur = () => {
     const cardNameWithoutSpaces = cardName.trim();
-  
+
     if (cardNameWithoutSpaces.length > 20) {
-      setCardNameError('El nombre del título no puede tener más de 20 caracteres.');
-      onCardHolderNameBlur('');
+      setCardNameError('El nombre del titular no puede tener más de 20 caracteres.');
     } else {
       setCardNameError('');
-      onCardHolderNameBlur(cardNameWithoutSpaces);
     }
 
-    setCardName(cardNameWithoutSpaces)
+    setCardName(cardNameWithoutSpaces);
+
+    validateData();
   };
-  
-  const valueCardName = (e) => {
-    const inputValue = e.target.value;
 
-    if (inputValue.trim() === '') {
-      // Si el campo está vacío, no mostramos error.
-      setCardName(inputValue);
-      setCardNameError('');
-    } else if (inputValue.trim().length <= 20) {
-      // Si la entrada es válida y no supera los 16 dígitos, no mostramos error.
-      setCardName(inputValue);
-      setCardNameError('');
-    } else {
-      // Si la entrada no es válida, mostramos un mensaje de error.
-      //setCardNameError('Nombre del titular invalido');
-    }
-  };
-  
-
-
-
-
-
-  const validateExpiryMonth = () => {
+  // Maneja el evento onBlur para el mes de vencimiento
+  const onExpiryMonthBlur = () => {
     if (expiryMonth < 1 || expiryMonth > 12) {
       setExpiryMonthError('El mes debe estar en el rango de 01-12');
-      onExpirationMonthBlur('');
     } else if (!expiryMonth.match(/^(0[1-9]|1[0-2])$/)) {
-      setExpiryMonthError('Mes inválido (01-12)');
-      onExpirationMonthBlur('');
+      setExpiryMonthError('El mes debe tener dos números (01-12)');
     } else {
       setExpiryMonthError('');
-      onExpirationMonthBlur(expiryMonth);
-    }  
-  };
-  
-  
+    }
 
-  const handleExpiryMonthChange = (e) => {
-    const inputValue = e.target.value;
-  
-    // Elimina caracteres no numéricos
-    const sanitizedValue = inputValue.replace(/[^0-9]/g, '');
-  
-    // Limita a 2 caracteres
-    const truncatedValue = sanitizedValue.slice(0, 2);
-  
-    // Actualiza el estado con el valor truncado
-    setExpiryMonth(truncatedValue);
+    validateData();
   };
-    
 
-  const validateExpiryYear = () => {
+  // Maneja el evento onBlur para el año de vencimiento
+  const onExpiryYearBlur = () => {
     const currentYear = new Date().getFullYear();
     const enteredYear = parseInt(expiryYear, 10);
-  
+
     if (!expiryYear.match(/^\d{4}$/) || enteredYear < currentYear) {
       setExpiryYearError('Año inválido (debe ser mayor o igual al actual)');
-      onExpirationYearBlur('')
     } else {
       setExpiryYearError('');
-      onExpirationYearBlur(expiryYear)
     }
-  };
-  
 
-  const handleExpiryYearChange = (e) => {
-    const inputValue = e.target.value;
-  
-    // Elimina caracteres no numéricos
-    const sanitizedValue = inputValue.replace(/[^\d]/g, '');
-  
-    // Limita a 4 caracteres
-    const truncatedValue = sanitizedValue.slice(0, 4);
-  
-    // Actualiza el estado con el valor truncado
-    setExpiryYear(truncatedValue);
+    validateData();
   };
-  
 
-  const handleCvvChange = (e) => {
-    const inputValue = e.target.value;
-  
-    // Elimina caracteres no numéricos y limita a 3 caracteres
-    const sanitizedValue = inputValue.replace(/[^\d]/g, '').slice(0, 3);
-  
-    // Actualiza el estado con el valor truncado
-    setCvv(sanitizedValue);
-  
-    // Realiza la validación en tiempo real
-    validateCvv();
-  };
-  
-  const validateCvv = () => {
-    const cvvWithoutSpaces = cvv.replace(/\s+/g, ''); // Elimina espacios en blanco
-  
-    if (!cvvWithoutSpaces.match(/^\d{3}$/)) {
-      setCvvError('CVV inválido (3 dígitos)');
-      onCvvBlur('')
+  // Maneja el evento onBlur para el CVV
+  const onCvvBlur = () => {
+    if (cvv.length < 3) {
+      setCvvError('El CVV debe ser de 3 números');
     } else {
       setCvvError('');
-      onCvvBlur(cvvWithoutSpaces)
     }
+
+    validateData();
   };
-  
+
+  // Función para validar si todos los campos son válidos y llama a la función del padre
+  const validateData = () => {
+    onPaymentDataValidChange(
+      (cardNumber !== '' && cardNumber[0] === '4') &&
+      cardName !== '' &&
+      expiryMonth !== '' &&
+      expiryYear !== '' &&
+      cvv !== ''
+    );
+  };
 
   return (
     <div>
@@ -179,50 +103,54 @@ function PagoTarjeta( { onCardNumberBlur, onCardHolderNameBlur, onExpirationMont
         fullWidth
         value={cardNumber}
         onBlur={handleCardNumberBlur}
-        onChange={valueCardNumber}
+        onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, '').slice(0, 16))}
         error={Boolean(cardNumberError)}
         helperText={cardNumberError}
+        required
       />
       <TextField
-        label="Nombre en la Tarjeta"
+        label="Nombre del titular"
         variant="outlined"
         fullWidth
         value={cardName}
         onBlur={handleCardNameBlur}
-        onChange={valueCardName}
+        onChange={(e) => setCardName(e.target.value.slice(0, 30))}
         error={Boolean(cardNameError)}
         helperText={cardNameError}
+        required
       />
-<TextField
-  label="Mes (MM)"
-  variant="outlined"
-  fullWidth
-  value={expiryMonth}
-  onChange={handleExpiryMonthChange}
-  onBlur={validateExpiryMonth}
-  error={Boolean(expiryMonthError)}
-  helperText={expiryMonthError}
-/>
-<TextField
-  label="Año (AAAA)"
-  variant="outlined"
-  fullWidth
-  value={expiryYear}
-  onChange={handleExpiryYearChange}
-  onBlur={validateExpiryYear}
-  error={Boolean(expiryYearError)}
-  helperText={expiryYearError}
-/>
-
+      <TextField
+        label="Mes (MM)"
+        variant="outlined"
+        fullWidth
+        value={expiryMonth}
+        onChange={(e) => setExpiryMonth(e.target.value.replace(/\D/g, '').slice(0, 2))}
+        onBlur={onExpiryMonthBlur}
+        error={Boolean(expiryMonthError)}
+        helperText={expiryMonthError}
+        required
+      />
+      <TextField
+        label="Año (AAAA)"
+        variant="outlined"
+        fullWidth
+        value={expiryYear}
+        onChange={(e) => setExpiryYear(e.target.value.replace(/\D/g, '').slice(0, 4))}
+        onBlur={onExpiryYearBlur}
+        error={Boolean(expiryYearError)}
+        helperText={expiryYearError}
+        required
+      />
       <TextField
         label="CVV"
         variant="outlined"
         fullWidth
         value={cvv}
-        onChange={handleCvvChange}
-        onBlur={validateCvv}
+        onBlur={onCvvBlur}
+        onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 3))}
         error={Boolean(cvvError)}
         helperText={cvvError}
+        required
       />
     </div>
   );

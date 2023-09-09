@@ -12,84 +12,30 @@ import PagoEfectivo from './PagoEfectivo';
 import PagoTarjeta from './PagoTarjeta';
 
 function FormaPago({ onChangeFormaPago, total }) {
-  // Estado local para la opción seleccionada, datos de tarjeta y monto
+  // Estado local para la opción seleccionada
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('efectivo');
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardHolderName, setCardHolderName] = useState('');
-  const [expirationMonth, setExpirationMonth] = useState('');
-  const [expirationYear, setExpirationYear] = useState('');
-  const [cvv, setCvv] = useState('');
-  const [amount, setAmount] = useState('');
+
+  // Estado local para validar si el monto es válido
+  const [isAmountValid, setIsAmountValid] = useState(false);
 
   // Estado local para validar si los datos de pago son correctos
   const [isPaymentDataValid, setIsPaymentDataValid] = useState(false);
 
   // Manejador para el cambio de la opción de pago
   const handlePaymentOptionChange = (event) => {
+    // Establece la opción seleccionada en false para ambos estados
+    setIsAmountValid(false);
+    setIsPaymentDataValid(false);
     setSelectedPaymentOption(event.target.value);
-    setIsPaymentDataValid(false); // Reinicia la validación cuando cambia la opción de pago
-  };
-
-  // Manejador para el evento onBlur del número de tarjeta
-  const handleCardNumberBlur = (cardNumber) => {
-    setCardNumber(cardNumber);
-    validatePaymentData();
-  };
-
-  // Manejador para el evento onBlur del nombre del titular de la tarjeta
-  const handleCardHolderNameBlur = (cardHolderName) => {
-    setCardHolderName(cardHolderName);
-    validatePaymentData();
-  };
-
-  // Manejador para el evento onBlur del mes de vencimiento de la tarjeta
-  const handleExpirationMonthBlur = (expirationMonth) => {
-    setExpirationMonth(expirationMonth);
-    validatePaymentData();
-  };
-
-  // Manejador para el evento onBlur del año de vencimiento de la tarjeta
-  const handleExpirationYearBlur = (expirationYear) => {
-    setExpirationYear(expirationYear);
-    validatePaymentData();
-  };
-
-  // Manejador para el evento onBlur del CVV de la tarjeta
-  const handleCvvBlur = (cvv) => {
-    setCvv(cvv);
-    validatePaymentData();
-  };
-
-  // Manejador para el evento onBlur del monto
-  const handleAmountBlur = (amount) => {
-    setAmount(amount);
-    validatePaymentData();
-  };
-
-  // Función para validar los datos de pago
-  const validatePaymentData = () => {
-    if (
-      (selectedPaymentOption === 'efectivo' && amount !== '') || // Validación para pago en efectivo
-      (selectedPaymentOption === 'tarjeta' && // Validación para pago con tarjeta
-        cardNumber.trim() !== '' &&
-        cardHolderName.trim() !== '' &&
-        expirationMonth.trim() !== '' &&
-        expirationYear.trim() !== '' &&
-        cvv.trim() !== '')
-    ) {
-      setIsPaymentDataValid(true);
-    } else {
-      setIsPaymentDataValid(false);
-    }
   };
 
   // Efecto secundario para comunicar el estado de la validación al componente padre
   useEffect(() => {
-    onChangeFormaPago(isPaymentDataValid);
-  }, [isPaymentDataValid, onChangeFormaPago]);
+    onChangeFormaPago(isAmountValid !== isPaymentDataValid);
+  }, [isAmountValid, isPaymentDataValid, onChangeFormaPago]);
 
   return (
-    <Paper elevation={3} style={{ padding: '16px' }}> {/* Utiliza un Paper para envolver el contenido */}
+    <Paper elevation={3} style={{ padding: '16px' }}>
       <Typography variant="h5" gutterBottom>
         Forma de Pago
       </Typography>
@@ -117,15 +63,14 @@ function FormaPago({ onChangeFormaPago, total }) {
       </FormControl>
 
       {selectedPaymentOption === 'efectivo' && (
-        <PagoEfectivo onAmountBlur={handleAmountBlur} total={total}/>
+        <PagoEfectivo
+          total={total}
+          onAmountValidChange={setIsAmountValid}
+        />
       )}
       {selectedPaymentOption === 'tarjeta' && (
         <PagoTarjeta
-          onCardNumberBlur={handleCardNumberBlur}
-          onCardHolderNameBlur={handleCardHolderNameBlur}
-          onExpirationMonthBlur={handleExpirationMonthBlur}
-          onExpirationYearBlur={handleExpirationYearBlur}
-          onCvvBlur={handleCvvBlur}
+          onPaymentDataValidChange={setIsPaymentDataValid}
         />
       )}
     </Paper>
