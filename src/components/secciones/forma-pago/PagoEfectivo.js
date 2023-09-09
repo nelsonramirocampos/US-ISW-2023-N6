@@ -6,7 +6,7 @@ function PagoEfectivo({ total, onAmountValidChange }) {
   // Estado local para el monto y el error del monto
   const [amount, setAmount] = useState('');
   const [amountError, setAmountError] = useState('');
-  const [isAmountValid, setIsAmountValid] = useState(false); // Nuevo estado para indicar si el monto es válido
+  const [, setIsAmountValid] = useState(false); // Nuevo estado para indicar si el monto es válido
 
   /**
    * Validación: No se permite dejar el campo vacío.
