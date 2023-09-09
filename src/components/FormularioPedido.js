@@ -11,7 +11,7 @@ function Formulario() {
   const [isShippingDataValid, setIsShippingDataValid] = useState(false);
   const [total, setTotal] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [pedidoConfirmado, setPedidoConfirmado] = useState(false);
+  const [pedidoConfirmado, ] = useState(false);
   const [carritoVacio, setCarritoVacio] = useState(true);
 
   const handlePaymentDataChange = (isValid) => {
