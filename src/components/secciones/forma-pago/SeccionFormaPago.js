@@ -11,7 +11,7 @@ import {
 import PagoEfectivo from './PagoEfectivo';
 import PagoTarjeta from './PagoTarjeta';
 
-function FormaPago({ onChangeFormaPago, total }) {
+function SeccionFormaPago({ onChangeFormaPago, total }) {
   // Estado local para la opción seleccionada
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('efectivo');
 
@@ -77,4 +77,4 @@ function FormaPago({ onChangeFormaPago, total }) {
   );
 }
 
-export default FormaPago;
+export default SeccionFormaPago;

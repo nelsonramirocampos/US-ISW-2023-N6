@@ -12,8 +12,6 @@ function Formulario() {
   const [total, setTotal] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pedidoConfirmado, setPedidoConfirmado] = useState(false);
-
-  // Agregamos un estado para controlar si el carrito está vacío o no
   const [carritoVacio, setCarritoVacio] = useState(true);
 
   const handlePaymentDataChange = (isValid) => {
@@ -32,7 +30,6 @@ function Formulario() {
     setTotal(newTotal);
   };
 
-  // Agregamos una función para manejar el cambio en el estado del carrito
   const handleCarritoChange = (isEmpty) => {
     setCarritoVacio(isEmpty);
   };
@@ -45,12 +42,11 @@ function Formulario() {
   };
 
   return (
-    <div>
-      <h2>Formulario de Confirmación de Pedido</h2>
+    <div style={{ textAlign: 'center' }}>
+      <h1 style={{ fontSize: '24px' }}>Completa los datos de tú Pedido</h1>
 
       <SeccionCarritoPedido
         onTotalChange={handleTotalChange}
-        // Pasamos la función handleCarritoChange al componente hijo
         onCarritoChange={handleCarritoChange}
       />
 
@@ -62,18 +58,14 @@ function Formulario() {
 
           <SeccionRecibimiento />
 
-          <FormaPago
-            onChangeFormaPago={handlePaymentDataChange}
-            total={total}
-          />
+          <FormaPago onChangeFormaPago={handlePaymentDataChange} total={total} />
 
           <Button
             variant="contained"
             color="primary"
-            // Deshabilitamos el botón si el carrito está vacío
             disabled={!isPaymentDataValid || !isShippingDataValid || carritoVacio}
             onClick={handleOpenDialog}
-            style={{ width: '100%' }}
+            style={{ width: '100%', fontSize: '20px' }}
           >
             Confirmar Pedido
           </Button>

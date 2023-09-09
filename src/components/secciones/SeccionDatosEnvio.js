@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
+import Divider from '@mui/material/Divider';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -68,6 +69,7 @@ function DatosEnvio({ onChangeDatosEnvio }) {
       <Typography variant="h5" gutterBottom>
         Ingresa los datos donde enviaremos tú pedido
       </Typography>
+      <Divider style={{ marginBottom: '20px' }} />
 
       <FormGroup>
         {/* Campo de entrada para la calle */}
