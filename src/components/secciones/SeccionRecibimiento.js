@@ -4,6 +4,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // Importa el a
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'; // Importa el proveedor de localización
 import { DatePicker } from '@mui/x-date-pickers'; // Importa el componente DatePicker
 import Radio from '@mui/material/Radio'; // Importa el componente Radio de Material-UI
+import Divider from '@mui/material/Divider'; // Importa el componente Divider de Material-UI
 import RadioGroup from '@mui/material/RadioGroup'; // Importa el componente RadioGroup de Material-UI
 import FormControlLabel from '@mui/material/FormControlLabel'; // Importa el componente FormControlLabel de Material-UI
 import Paper from '@mui/material/Paper'; // Importa el componente Paper de Material-UI
@@ -66,6 +67,8 @@ export default function SeccionRecibimiento() {
       <Typography variant="h5" gutterBottom>
         Elije cuando quieres la entrega
       </Typography>
+      <Divider style={{ marginBottom: '20px' }} />
+
       <RadioGroup
         aria-label="DatePicker"
         name="datePickerControl"

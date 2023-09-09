@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
+import Divider from '@mui/material/Divider';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -68,6 +69,7 @@ function DatosEnvio({ onChangeDatosEnvio }) {
       <Typography variant="h5" gutterBottom>
         Ingresa los datos donde enviaremos tú pedido
       </Typography>
+      <Divider style={{ marginBottom: '20px' }} />
 
       <FormGroup>
         {/* Campo de entrada para la calle */}
@@ -85,12 +87,12 @@ function DatosEnvio({ onChangeDatosEnvio }) {
         {/* Campo de entrada para el número */}
         <TextField
           required
-          label="Número"
+          label="Número/Altura"
           variant="outlined"
           fullWidth
-          type="number"
+          type="text"
           value={numero}
-          onChange={(e) => setNumero(e.target.value)}
+          onChange={(e) => setNumero(e.target.value.replace(/\D/g, '').slice(0, 6))}
           onBlur={handleNumeroBlur}
           error={Boolean(numeroError)}
           helperText={numeroError}
