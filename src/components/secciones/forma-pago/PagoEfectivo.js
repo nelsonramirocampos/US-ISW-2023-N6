@@ -1,11 +1,12 @@
 import { InputAdornment, TextField } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 
-function PagoEfectivo({ onAmountBlur, total }) {
+function PagoEfectivo({ total, onAmountValidChange }) {
   // Estado local para el monto y el error del monto
-  const [amount, setAmount] = useState(total.toString()); // Inicializa el estado con el valor total
+  const [amount, setAmount] = useState('');
   const [amountError, setAmountError] = useState('');
+  const [isAmountValid, setIsAmountValid] = useState(false); // Nuevo estado para indicar si el monto es válido
 
   /**
    * Validación: No se permite dejar el campo vacío.
@@ -62,14 +63,13 @@ function PagoEfectivo({ onAmountBlur, total }) {
     setAmountError(error);
     setAmount(value);
 
-    // Llamar a onAmountBlur con el valor correcto
-    if (error) {
-      onAmountBlur('');
-    } else {
-      onAmountBlur(value);
-    }
-  };
+    // Actualiza el estado isAmountValid
+    setIsAmountValid(error === '');
 
+    // Envía el valor booleano isAmountValid al componente padre
+    onAmountValidChange(error === '');
+  };
+  
   // Propiedades para personalizar el TextField de Material UI
   const materialUiTextFieldProps = {
     required: true,
@@ -80,10 +80,10 @@ function PagoEfectivo({ onAmountBlur, total }) {
     },
   };
 
-  // Efecto secundario para actualizar el estado del monto cuando cambia el total
-  useEffect(() => {
-    setAmount(total.toString());
-  }, [total]);
+  const customFormat = (value) => {
+    // Formatea el número con un punto como divisor de miles y una coma para decimales
+    return new Intl.NumberFormat('es-ES').format(value);
+  };
 
   return (
     <div>
@@ -93,6 +93,7 @@ function PagoEfectivo({ onAmountBlur, total }) {
         decimalSeparator=","
         decimalScale={2}
         {...materialUiTextFieldProps}
+        format={customFormat}
         value={amount}
         onValueChange={handleAmountChange}
         error={Boolean(amountError)}

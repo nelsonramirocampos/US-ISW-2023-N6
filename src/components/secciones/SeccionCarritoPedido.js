@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function SeccionCarritoPedido({ onTotalChange }) {
-  // Estado para mantener los productos en el carrito
+function SeccionCarritoPedido({ onTotalChange, onCarritoChange }) {
+  // Estado local para la lista de productos en el carrito
   const [productos, setProductos] = useState([
     { id: 1, nombre: 'Lomito con Chimi', cantidad: 2, precioUnitario: 10 },
     { id: 2, nombre: 'Panchito', cantidad: 3, precioUnitario: 15 },
@@ -27,17 +27,21 @@ function SeccionCarritoPedido({ onTotalChange }) {
     setProductos(nuevosProductos);
   };
 
-  // Función para calcular el total a abonar
+  // Función para calcular el total del carrito
   const calcularTotal = useCallback(() => {
     return productos.reduce((total, producto) => {
       return total + producto.cantidad * producto.precioUnitario;
     }, 0);
   }, [productos]);
 
+  // Efecto secundario para actualizar el total cuando cambian los productos en el carrito
   useEffect(() => {
     const total = calcularTotal();
-    onTotalChange(total); // Llama a la función con el total calculado después de la renderización
-  }, [productos, onTotalChange, calcularTotal]);
+    onTotalChange(total);
+
+    // Notificamos al componente padre si el carrito está vacío o no
+    onCarritoChange(productos.length === 0);
+  }, [productos, onTotalChange, calcularTotal, onCarritoChange]);
 
   return (
     <Paper elevation={3} style={{ padding: '16px' }}>

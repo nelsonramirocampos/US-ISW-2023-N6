@@ -41,6 +41,7 @@ function DatosEnvio({ onChangeDatosEnvio }) {
   const handleNumeroBlur = () => {
     const trimmedNumero = numero.trim(); // Elimina espacios en blanco
     setNumero(trimmedNumero); // Actualiza el estado con el valor sin espacios
+    
     if (trimmedNumero === '') {
       setNumeroError('El campo número no puede quedar vacío');
     } else if (isNaN(trimmedNumero)) {
