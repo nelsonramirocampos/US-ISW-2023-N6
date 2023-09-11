@@ -37,11 +37,31 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
     } else {
       setCardNameError('');
     }
+  };
 
-    setCardName(cardNameWithoutSpaces);
+  // Maneja el evento onBlur para el nombre del titular
+  const handleCardNameChange = (e) => {
+    const alphanumericRegex = /^[a-zA\s]+$/;
+
+    const value = e.target.value;
+
+    // Verifica si el valor ingresado contiene caracteres no permitidos
+    if (!alphanumericRegex.test(value)) {
+      setCardNameError('La nombre del titular solo puede contener letras');
+    }
+    else {
+      setCardNameError('');
+      setCardName(value); // Actualiza el estado con el valor válido
+    }
+
+    //Por si no queda ningún caracter
+    if (value === ''){
+      setCardName(value);
+    }
 
     validateData();
   };
+
 
   // Maneja el evento onBlur para el mes de vencimiento
   const onExpiryMonthBlur = () => {
@@ -57,18 +77,21 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
   };
 
   // Maneja el evento onBlur para el año de vencimiento
-  const onExpiryYearBlur = () => {
-    const currentYear = new Date().getFullYear();
-    const enteredYear = parseInt(expiryYear, 10);
+// Maneja el evento onBlur para el año de vencimiento
+const onExpiryYearBlur = () => {
+  const currentYear = new Date().getFullYear();
+  const enteredYear = parseInt(expiryYear, 10);
 
-    if (!expiryYear.match(/^\d{4}$/) || enteredYear < currentYear) {
-      setExpiryYearError('Año inválido (debe ser mayor o igual al actual)');
-    } else {
-      setExpiryYearError('');
-    }
+  if (expiryYear.length !== 4) {
+    setExpiryYearError('El año debe tener 4 dígitos');
+  } else if (!expiryYear.match(/^\d{4}$/) || enteredYear < currentYear) {
+    setExpiryYearError('Año inválido (debe ser mayor o igual al actual)');
+  } else {
+    setExpiryYearError('');
+  }
 
-    validateData();
-  };
+  validateData();
+};
 
   // Maneja el evento onBlur para el CVV
   const onCvvBlur = () => {
@@ -114,9 +137,10 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
         fullWidth
         value={cardName}
         onBlur={handleCardNameBlur}
-        onChange={(e) => setCardName(e.target.value.slice(0, 30))}
+        onChange={handleCardNameChange}
         error={Boolean(cardNameError)}
         helperText={cardNameError}
+        inputProps={{ maxLength: 20 }}
         required
       />
       <TextField
@@ -128,6 +152,7 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
         onBlur={onExpiryMonthBlur}
         error={Boolean(expiryMonthError)}
         helperText={expiryMonthError}
+        inputProps={{ maxLength: 2 }}
         required
       />
       <TextField
@@ -139,6 +164,7 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
         onBlur={onExpiryYearBlur}
         error={Boolean(expiryYearError)}
         helperText={expiryYearError}
+        inputProps={{ maxLength: 4 }}
         required
       />
       <TextField
