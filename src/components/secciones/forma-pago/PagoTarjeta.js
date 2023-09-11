@@ -15,6 +15,26 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
   const [expiryYearError, setExpiryYearError] = useState('');
   const [cvvError, setCvvError] = useState('');
 
+    // Función para validar si la tarjeta está vencida con respecto a la fecha actual
+    const validateExpiryDate = () => {
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth() + 1; // Meses van de 0 a 11, sumamos 1
+  
+      const enteredYearInt = parseInt(expiryYear, 10);
+      const enteredMonthInt = parseInt(expiryMonth, 10);
+  
+      if (enteredYearInt < currentYear || (enteredYearInt === currentYear && enteredMonthInt < currentMonth)) {
+        setExpiryYearError('La tarjeta está vencida');
+        setExpiryMonthError('La tarjeta está vencida');
+      } else {
+        setExpiryYearError('');
+        setExpiryMonthError('');
+      }
+    };
+
+    
+    
+
   // Maneja el evento onBlur para el número de tarjeta
   const handleCardNumberBlur = () => {
     if (cardNumber.length !== 16) {
@@ -73,25 +93,33 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
       setExpiryMonthError('');
     }
 
+    if (expiryYear && expiryMonth) {
+      validateExpiryDate(); // Valida la fecha de vencimiento si ambos campos están ingresados
+    }
+
     validateData();
   };
 
+
   // Maneja el evento onBlur para el año de vencimiento
-// Maneja el evento onBlur para el año de vencimiento
-const onExpiryYearBlur = () => {
-  const currentYear = new Date().getFullYear();
-  const enteredYear = parseInt(expiryYear, 10);
+  const onExpiryYearBlur = () => {
+    const currentYear = new Date().getFullYear();
+    const enteredYear = parseInt(expiryYear, 10);
 
-  if (expiryYear.length !== 4) {
-    setExpiryYearError('El año debe tener 4 dígitos');
-  } else if (!expiryYear.match(/^\d{4}$/) || enteredYear < currentYear) {
-    setExpiryYearError('Año inválido (debe ser mayor o igual al actual)');
-  } else {
-    setExpiryYearError('');
-  }
+    if (expiryYear.length !== 4) {
+      setExpiryYearError('El año debe tener 4 dígitos');
+    } else if (!expiryYear.match(/^\d{4}$/) || enteredYear < currentYear) {
+      setExpiryYearError('Año inválido (debe ser mayor o igual al actual)');
+    } else {
+      setExpiryYearError('');
+    }
 
-  validateData();
-};
+    if (expiryYear && expiryMonth) {
+      validateExpiryDate(); // Valida la fecha de vencimiento si ambos campos están ingresados
+    }
+
+    validateData();
+  };
 
   // Maneja el evento onBlur para el CVV
   const onCvvBlur = () => {
