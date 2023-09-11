@@ -52,7 +52,6 @@ export default function SeccionRecibimiento() {
     // Inicializa la fecha seleccionada con la fecha actual más 1 día
     setSelectedDate(dayjs().add(1, 'day'));
 
-
     // Establece la hora seleccionada inicialmente como 8
     setSelectedHour(8);
   }, []);
@@ -86,7 +85,7 @@ export default function SeccionRecibimiento() {
       {/* Componentes relacionados con la fecha y la hora */}
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
         {isDatePickerEnabled && (
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
             {/* DatePicker para elegir la fecha de entrega */}
             <DatePicker
               label="Fecha de Entrega"
@@ -98,17 +97,18 @@ export default function SeccionRecibimiento() {
               value={selectedDate}
               onChange={handleDateChange}
               required
+              style={{ marginRight: '10px' }} // Añade margen derecho para separar los componentes
             />
             
             {/* Select para elegir la hora de entrega */}
             <FormControl style={{ minWidth: '120px' }}>
               <InputLabel>Hora de Entrega</InputLabel>
               <Select
+                label='Hora de Entrega'
                 value={selectedHour}
                 onChange={handleHourChange}
                 style={{ minWidth: '120px' }}
               >
-                {/* Mapeo de las horas desde 8 hasta 23 */}
                 {hoursArray.map((hour) => (
                   <MenuItem key={hour} value={hour}>
                     {hour < 10 ? `0${hour}:00` : `${hour}:00`}
