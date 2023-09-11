@@ -19,16 +19,39 @@ function DatosEnvio({ onChangeDatosEnvio }) {
   const [numeroError, setNumeroError] = useState('');
   const [ciudadError, setCiudadError] = useState('');
 
+    // Expresión regular para validar letras y números en la calle
+    const alphanumericRegex = /^[a-zA-Z0-9\s]+$/;
+
   // Manejador para el evento onBlur de la calle
   const handleCalleBlur = () => {
     const trimmedCalle = calle.trim(); // Elimina espacios en blanco
     setCalle(trimmedCalle); // Actualiza el estado con el valor sin espacios
     if (trimmedCalle === '') {
       setCalleError('La calle no puede estar vacía');
-    } else {
-      setCalleError('');
     }
   };
+
+
+// Manejador para el evento onChange de la calle
+const handleCalleChange = (e) => {
+  const value = e.target.value;
+
+  // Verifica si el valor ingresado contiene caracteres no permitidos
+  if (!alphanumericRegex.test(value)) {
+    setCalleError('La calle solo puede contener letras y números');
+  }
+  else {
+    setCalleError('');
+    setCalle(value); // Actualiza el estado con el valor válido
+  }
+
+  //Por si no queda ningún caracter
+  if (value === ''){
+    setCalle(value);
+  }
+};
+
+
 
   // Efecto secundario que se ejecuta cuando cambian los datos de envío
   useEffect(() => {
@@ -79,10 +102,11 @@ function DatosEnvio({ onChangeDatosEnvio }) {
           variant="outlined"
           fullWidth
           value={calle}
-          onChange={(e) => setCalle(e.target.value)}
+          onChange={handleCalleChange}
           onBlur={handleCalleBlur}
           error={Boolean(calleError)}
           helperText={calleError}
+          inputProps={{ maxLength: 30 }}
         />
         {/* Campo de entrada para el número */}
         <TextField
