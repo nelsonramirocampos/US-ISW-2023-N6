@@ -57,7 +57,7 @@ export default function SeccionRecibimiento() {
   }, []);
 
   return (
-    <Paper elevation={3} style={{ padding: '16px' }}>
+    <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#a3bac3' }}>
       <Typography variant="h5" gutterBottom>
         Elije cuando quieres la entrega
       </Typography>

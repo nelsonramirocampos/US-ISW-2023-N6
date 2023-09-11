@@ -35,7 +35,7 @@ function SeccionFormaPago({ onChangeFormaPago, total }) {
   }, [isAmountValid, isPaymentDataValid, onChangeFormaPago]);
 
   return (
-    <Paper elevation={3} style={{ padding: '16px' }}>
+    <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#a3bac3' }}>
       <Typography variant="h5" gutterBottom>
         Forma de Pago
       </Typography>

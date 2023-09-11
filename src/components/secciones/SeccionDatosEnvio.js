@@ -85,10 +85,10 @@ const handleCalleChange = (e) => {
       setCiudadError('');
     }
   };
-
+  
   return (
     // Componente que muestra los datos de envío y errores
-    <Paper elevation={3} style={{ padding: '16px' }}>
+    <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#a3bac3' }}>
       <Typography variant="h5" gutterBottom>
         Ingresá los datos donde enviaremos tú pedido
       </Typography>
