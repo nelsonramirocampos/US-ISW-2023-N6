@@ -44,92 +44,101 @@ function SeccionCarritoPedido({ onTotalChange, onCarritoChange }) {
   }, [productos, onTotalChange, calcularTotal, onCarritoChange]);
 
   return (
-    <Paper elevation={3} style={{ padding: "16px" }}>
+    <Paper elevation={3} style={{ padding: "16px", backgroundColor: '#a3bac3'}}>
       <Typography variant="h5" gutterBottom>
         Detalle de Pedido
       </Typography>
       <Divider style={{ marginBottom: "20px" }} />
 
-      <TableContainer component={Paper}>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "1.2em",
-                  textAlign: "center",
-                }}
-              >
-                Producto
-              </TableCell>
-              <TableCell
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "1.2em",
-                  textAlign: "center",
-                }}
-              >
-                Cantidad
-              </TableCell>
-              <TableCell
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "1.2em",
-                  textAlign: "center",
-                }}
-              >
-                Precio Unitario
-              </TableCell>
-              <TableCell
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "1.2em",
-                  textAlign: "center",
-                }}
-              >
-                Total
-              </TableCell>
-              <TableCell
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "1.2em",
-                  textAlign: "center",
-                }}
-              >
-                Eliminar
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {productos.map((producto) => (
-              <TableRow key={producto.id}>
-                <TableCell>{producto.nombre}</TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  {producto.cantidad}
+      {productos.length === 0 ? (
+        <Typography variant="body1" color="error">
+          El carrito está vacío.
+        </Typography>
+      ) : (
+        <TableContainer component={Paper}>
+          <Table size="small">
+            <TableHead>
+              <TableRow style={{ backgroundColor: "#01a7c2" }}>
+                <TableCell
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "1.2em",
+                    textAlign: "center",
+                  }}
+                >
+                  Producto
                 </TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  ${producto.precioUnitario}
+                <TableCell
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "1.2em",
+                    textAlign: "center",
+                  }}
+                >
+                  Cantidad
                 </TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  ${producto.cantidad * producto.precioUnitario}
+                <TableCell
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "1.2em",
+                    textAlign: "center",
+                  }}
+                >
+                  Precio Unitario
                 </TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  <IconButton
-                    onClick={() => eliminarProducto(producto.id)}
-                    color="error"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                <TableCell
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "1.2em",
+                    textAlign: "center",
+                  }}
+                >
+                  Total
+                </TableCell>
+                <TableCell
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "1.2em",
+                    textAlign: "center",
+                  }}
+                >
+                  Eliminar
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Typography variant="h6" gutterBottom>
-        Total a abonar: ${calcularTotal()}
-      </Typography>
+            </TableHead>
+            <TableBody>
+              {productos.map((producto) => (
+                <TableRow key={producto.id}>
+                  <TableCell>{producto.nombre}</TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    {producto.cantidad}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    ${producto.precioUnitario}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    ${producto.cantidad * producto.precioUnitario}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    <IconButton
+                      onClick={() => eliminarProducto(producto.id)}
+                      color="error"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+
+      {productos.length > 0 && (
+        <Typography variant="h6" gutterBottom>
+          Total a abonar: ${calcularTotal()}
+        </Typography>
+      )}
     </Paper>
   );
 }
