@@ -146,6 +146,7 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
   return (
     <div>
       <h2>Pago con Tarjeta</h2>
+      <div style={{ marginBottom: '20px' }}>
       <TextField
         type="text"
         id="cardNumber"
@@ -159,6 +160,9 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
         helperText={cardNumberError}
         required
       />
+      </div>
+
+      <div style={{ marginBottom: '20px' }}>
       <TextField
         label="Nombre del titular"
         variant="outlined"
@@ -171,6 +175,9 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
         inputProps={{ maxLength: 20 }}
         required
       />
+      </div>
+
+      <div style={{ marginBottom: '20px' }}>
       <TextField
         label="Mes (MM)"
         variant="outlined"
@@ -183,6 +190,9 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
         inputProps={{ maxLength: 2 }}
         required
       />
+      </div>
+
+      <div style={{ marginBottom: '20px' }}>
       <TextField
         label="Año (AAAA)"
         variant="outlined"
@@ -195,6 +205,9 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
         inputProps={{ maxLength: 4 }}
         required
       />
+      </div>
+
+      <div style={{ marginBottom: '20px' }}>
       <TextField
         label="CVV"
         variant="outlined"
@@ -206,6 +219,7 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
         helperText={cvvError}
         required
       />
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Table,
   TableBody,
@@ -10,15 +10,15 @@ import {
   IconButton,
   Typography,
   Divider,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function SeccionCarritoPedido({ onTotalChange, onCarritoChange }) {
   // Estado local para la lista de productos en el carrito
   const [productos, setProductos] = useState([
-    { id: 1, nombre: 'Lomito con Chimi', cantidad: 2, precioUnitario: 10 },
-    { id: 2, nombre: 'Panchito', cantidad: 3, precioUnitario: 15 },
-    { id: 3, nombre: 'Gaseosa', cantidad: 1, precioUnitario: 20 },
+    { id: 1, nombre: "Lomito con Chimi", cantidad: 2, precioUnitario: 10 },
+    { id: 2, nombre: "Panchito", cantidad: 3, precioUnitario: 15 },
+    { id: 3, nombre: "Gaseosa", cantidad: 1, precioUnitario: 20 },
   ]);
 
   // Función para eliminar un producto del carrito
@@ -44,32 +44,81 @@ function SeccionCarritoPedido({ onTotalChange, onCarritoChange }) {
   }, [productos, onTotalChange, calcularTotal, onCarritoChange]);
 
   return (
-    <Paper elevation={3} style={{ padding: '16px' }}>
+    <Paper elevation={3} style={{ padding: "16px" }}>
       <Typography variant="h5" gutterBottom>
         Detalle de Pedido
       </Typography>
-      <Divider style={{ marginBottom: '20px' }} />
+      <Divider style={{ marginBottom: "20px" }} />
 
       <TableContainer component={Paper}>
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Producto</TableCell>
-              <TableCell>Cantidad</TableCell>
-              <TableCell>Precio Unitario</TableCell>
-              <TableCell>Total</TableCell>
-              <TableCell>Eliminar</TableCell>
+              <TableCell
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "1.2em",
+                  textAlign: "center",
+                }}
+              >
+                Producto
+              </TableCell>
+              <TableCell
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "1.2em",
+                  textAlign: "center",
+                }}
+              >
+                Cantidad
+              </TableCell>
+              <TableCell
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "1.2em",
+                  textAlign: "center",
+                }}
+              >
+                Precio Unitario
+              </TableCell>
+              <TableCell
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "1.2em",
+                  textAlign: "center",
+                }}
+              >
+                Total
+              </TableCell>
+              <TableCell
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "1.2em",
+                  textAlign: "center",
+                }}
+              >
+                Eliminar
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {productos.map((producto) => (
               <TableRow key={producto.id}>
                 <TableCell>{producto.nombre}</TableCell>
-                <TableCell>{producto.cantidad}</TableCell>
-                <TableCell>${producto.precioUnitario}</TableCell>
-                <TableCell>${producto.cantidad * producto.precioUnitario}</TableCell>
-                <TableCell>
-                  <IconButton onClick={() => eliminarProducto(producto.id)} color="error">
+                <TableCell style={{ textAlign: "center" }}>
+                  {producto.cantidad}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  ${producto.precioUnitario}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  ${producto.cantidad * producto.precioUnitario}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  <IconButton
+                    onClick={() => eliminarProducto(producto.id)}
+                    color="error"
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
