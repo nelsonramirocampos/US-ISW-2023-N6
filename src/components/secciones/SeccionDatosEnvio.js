@@ -96,56 +96,62 @@ const handleCalleChange = (e) => {
 
       <FormGroup>
         {/* Campo de entrada para la calle */}
-        <TextField
-          required
-          label="Calle"
-          variant="outlined"
-          fullWidth
-          value={calle}
-          onChange={handleCalleChange}
-          onBlur={handleCalleBlur}
-          error={Boolean(calleError)}
-          helperText={calleError}
-          inputProps={{ maxLength: 30 }}
-        />
+        <div style={{ marginBottom: '20px' }}>
+          <TextField
+            required
+            label="Calle"
+            variant="outlined"
+            fullWidth
+            value={calle}
+            onChange={handleCalleChange}
+            onBlur={handleCalleBlur}
+            error={Boolean(calleError)}
+            helperText={calleError}
+            inputProps={{ maxLength: 30 }}
+          />
+        </div>
         {/* Campo de entrada para el número */}
-        <TextField
-          required
-          label="Número/Altura"
-          variant="outlined"
-          fullWidth
-          type="text"
-          value={numero}
-          onChange={(e) => setNumero(e.target.value.replace(/\D/g, '').slice(0, 6))}
-          onBlur={handleNumeroBlur}
-          error={Boolean(numeroError)}
-          helperText={numeroError}
-        />
+        <div style={{ marginBottom: '20px' }}>
+          <TextField
+            required
+            label="Número/Altura"
+            variant="outlined"
+            fullWidth
+            type="text"
+            value={numero}
+            onChange={(e) => setNumero(e.target.value.replace(/\D/g, '').slice(0, 6))}
+            onBlur={handleNumeroBlur}
+            error={Boolean(numeroError)}
+            helperText={numeroError}
+          />
+        </div>
         {/* Selector de ciudad */}
-        <FormControl fullWidth required>
-          <InputLabel id="ciudad-label">Ciudad</InputLabel>
-          <Select
-            labelId="ciudad-label"
-            id="ciudad"
-            value={ciudad}
-            label="Ciudad"
-            onChange={(e) => setCiudad(e.target.value)}
-            onBlur={handleCiudadBlur}
-            error={Boolean(ciudadError)}
-          >
-            {/* Opciones de ciudades */}
-            <MenuItem value="CO">Cosquín</MenuItem>
-            <MenuItem value="MC">Mina Clavero</MenuItem>
-            <MenuItem value="NO">Nono</MenuItem>
-            <MenuItem value="SRC">Santa Rosa de Calamuchita</MenuItem>
-            <MenuItem value="VCP">Villa Carlos Paz</MenuItem>
-            <MenuItem value="VGB">Villa General Belgrano</MenuItem>
-          </Select>
-          {/* Mensaje de error para la ciudad */}
-          {ciudadError && (
-            <FormHelperText error>{ciudadError}</FormHelperText>
-          )}
-        </FormControl>
+        <div style={{ marginBottom: '20px' }}>
+          <FormControl fullWidth required>
+            <InputLabel id="ciudad-label">Ciudad</InputLabel>
+            <Select
+              labelId="ciudad-label"
+              id="ciudad"
+              value={ciudad}
+              label="Ciudad"
+              onChange={(e) => setCiudad(e.target.value)}
+              onBlur={handleCiudadBlur}
+              error={Boolean(ciudadError)}
+            >
+              {/* Opciones de ciudades */}
+              <MenuItem value="CO">Cosquín</MenuItem>
+              <MenuItem value="MC">Mina Clavero</MenuItem>
+              <MenuItem value="NO">Nono</MenuItem>
+              <MenuItem value="SRC">Santa Rosa de Calamuchita</MenuItem>
+              <MenuItem value="VCP">Villa Carlos Paz</MenuItem>
+              <MenuItem value="VGB">Villa General Belgrano</MenuItem>
+            </Select>
+            {/* Mensaje de error para la ciudad */}
+            {ciudadError && (
+              <FormHelperText error>{ciudadError}</FormHelperText>
+            )}
+          </FormControl>
+        </div>
       </FormGroup>
     </Paper>
   );

@@ -4,7 +4,7 @@ import { NumericFormat } from "react-number-format";
 
 function PagoEfectivo({ total, onAmountValidChange }) {
   // Estado local para el monto y el error del monto
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState('0');
   const [amountError, setAmountError] = useState('');
   const [, setIsAmountValid] = useState(false); // Nuevo estado para indicar si el monto es válido
 
@@ -87,6 +87,8 @@ function PagoEfectivo({ total, onAmountValidChange }) {
 
   return (
     <div>
+      <h2>Pago con Efectivo</h2>
+
       <NumericFormat
         customInput={TextField}
         thousandSeparator="."
