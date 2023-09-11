@@ -90,7 +90,7 @@ const handleCalleChange = (e) => {
     // Componente que muestra los datos de envío y errores
     <Paper elevation={3} style={{ padding: '16px' }}>
       <Typography variant="h5" gutterBottom>
-        Ingresa los datos donde enviaremos tú pedido
+        Ingresá los datos donde enviaremos tú pedido
       </Typography>
       <Divider style={{ marginBottom: '20px' }} />
 
@@ -134,7 +134,7 @@ const handleCalleChange = (e) => {
             error={Boolean(ciudadError)}
           >
             {/* Opciones de ciudades */}
-            <MenuItem value="CO">Cosquin</MenuItem>
+            <MenuItem value="CO">Cosquín</MenuItem>
             <MenuItem value="MC">Mina Clavero</MenuItem>
             <MenuItem value="NO">Nono</MenuItem>
             <MenuItem value="SRC">Santa Rosa de Calamuchita</MenuItem>
