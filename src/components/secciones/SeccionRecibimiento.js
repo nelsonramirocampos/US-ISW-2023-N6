@@ -1,43 +1,42 @@
-import * as React from 'react'; // Importa React y sus módulos
-import { useState, useEffect } from 'react'; // Importa useState y useEffect de React
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // Importa el adaptador para el componente DatePicker
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'; // Importa el proveedor de localización
-import { DatePicker } from '@mui/x-date-pickers'; // Importa el componente DatePicker
-import Radio from '@mui/material/Radio'; // Importa el componente Radio de Material-UI
-import Divider from '@mui/material/Divider'; // Importa el componente Divider de Material-UI
-import RadioGroup from '@mui/material/RadioGroup'; // Importa el componente RadioGroup de Material-UI
-import FormControlLabel from '@mui/material/FormControlLabel'; // Importa el componente FormControlLabel de Material-UI
-import Paper from '@mui/material/Paper'; // Importa el componente Paper de Material-UI
-import Typography from '@mui/material/Typography'; // Importa el componente Typography de Material-UI
-import 'dayjs/locale/es'; // Importa el idioma español para Dayjs
-import dayjs from 'dayjs'; // Importa la librería Dayjs
-
-import { Select, MenuItem, FormControl, InputLabel } from '@mui/material'; // Importa componentes de Material-UI
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers';
+import Radio from '@mui/material/Radio';
+import Divider from '@mui/material/Divider';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import 'dayjs/locale/es';
+import dayjs from 'dayjs';
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 export default function SeccionRecibimiento() {
+  // Estados para manejar la lógica del componente
   const [isDatePickerEnabled, setIsDatePickerEnabled] = useState(false); // Estado para habilitar/deshabilitar el DatePicker
   const [selectedDate, setSelectedDate] = useState(null); // Estado para almacenar la fecha seleccionada
   const [selectedHour, setSelectedHour] = useState(8); // Estado para almacenar la hora seleccionada (inicializada en 8)
-  const [availableHours, setAvailableHours] = useState([]); // Estado para almacenar las horas disponibles
 
   // Función para manejar el cambio de opción en el RadioGroup
   const handleRadioChange = (event) => {
-    setIsDatePickerEnabled(event.target.value === 'enable'); // Habilita o deshabilita el DatePicker según la opción seleccionada
+    setIsDatePickerEnabled(event.target.value === 'enable');
   };
 
   // Función para manejar el cambio de fecha en el DatePicker
   const handleDateChange = (newDate) => {
-    setSelectedDate(newDate); // Actualiza el estado de la fecha seleccionada
+    setSelectedDate(newDate);
   };
 
   // Función para manejar el cambio de hora en el Select
   const handleHourChange = (event) => {
-    setSelectedHour(parseInt(event.target.value, 10)); // Actualiza el estado de la hora seleccionada
+    setSelectedHour(parseInt(event.target.value, 10));
   };
 
   // Función para verificar si es domingo
   const isSunday = (date) => {
-    return date.day() === 0; // 0 representa el domingo
+    return date.day() === 0;
   };
 
   // Función para deshabilitar fechas (domingos en este caso)
@@ -45,21 +44,17 @@ export default function SeccionRecibimiento() {
     return isSunday(date);
   };
 
+  // Genera un arreglo de horas desde 8 hasta 23
+  const hoursArray = Array.from({ length: 23 - 8 + 1 }, (_, i) => i + 8);
+
   // Efecto secundario que se ejecuta una vez al montar el componente
   useEffect(() => {
-    setSelectedDate(dayjs().add(1, 'day')); // Actualiza la fecha actual cuando cambia el estado
-    const currentHour = dayjs().hour();
-    const minHour = 8; // Hora mínima permitida (08:00)
-    const maxHour = 23; // Hora máxima permitida (23:00)
+    // Inicializa la fecha seleccionada con la fecha actual más 1 día
+    setSelectedDate(dayjs().add(1, 'day'));
 
-    // Calcula las horas disponibles dentro del rango
-    const availableHours = Array.from({ length: maxHour - currentHour + 1 }, (_, i) => {
-      const hour = currentHour + i;
-      return hour >= minHour ? hour : null; // Filtra las horas fuera del rango
-    }).filter(hour => hour !== null);
 
-    setAvailableHours(availableHours);
-    setSelectedHour(availableHours[0]); // Establece la hora seleccionada inicialmente
+    // Establece la hora seleccionada inicialmente como 8
+    setSelectedHour(8);
   }, []);
 
   return (
@@ -69,6 +64,7 @@ export default function SeccionRecibimiento() {
       </Typography>
       <Divider style={{ marginBottom: '20px' }} />
 
+      {/* RadioGroup para habilitar/deshabilitar el DatePicker */}
       <RadioGroup
         aria-label="DatePicker"
         name="datePickerControl"
@@ -87,9 +83,11 @@ export default function SeccionRecibimiento() {
         />
       </RadioGroup>
 
+      {/* Componentes relacionados con la fecha y la hora */}
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
         {isDatePickerEnabled && (
           <div>
+            {/* DatePicker para elegir la fecha de entrega */}
             <DatePicker
               label="Fecha de Entrega"
               minDate={dayjs().add(1, 'day')} // Fecha mínima, 1 día después de la fecha actual
@@ -101,6 +99,8 @@ export default function SeccionRecibimiento() {
               onChange={handleDateChange}
               required
             />
+            
+            {/* Select para elegir la hora de entrega */}
             <FormControl style={{ minWidth: '120px' }}>
               <InputLabel>Hora de Entrega</InputLabel>
               <Select
@@ -108,7 +108,8 @@ export default function SeccionRecibimiento() {
                 onChange={handleHourChange}
                 style={{ minWidth: '120px' }}
               >
-                {availableHours.map((hour) => (
+                {/* Mapeo de las horas desde 8 hasta 23 */}
+                {hoursArray.map((hour) => (
                   <MenuItem key={hour} value={hour}>
                     {hour < 10 ? `0${hour}:00` : `${hour}:00`}
                   </MenuItem>
