@@ -50,7 +50,7 @@ function Formulario() {
         <Grid container justifyContent="center" alignItems="center">
           <Grid item xs={12}>
             <Typography variant="h4" align="center" gutterBottom>
-              Completa los datos de tu Pedido
+              Completá los datos de tu Pedido
             </Typography>
           </Grid>
           <Grid item xs={12}>
