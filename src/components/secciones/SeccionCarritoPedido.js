@@ -16,9 +16,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 function SeccionCarritoPedido({ onTotalChange, onCarritoChange }) {
   // Estado local para la lista de productos en el carrito
   const [productos, setProductos] = useState([
-    { id: 1, nombre: "Lomito con Chimi", cantidad: 2, precioUnitario: 10 },
-    { id: 2, nombre: "Panchito", cantidad: 3, precioUnitario: 15 },
-    { id: 3, nombre: "Gaseosa", cantidad: 1, precioUnitario: 20 },
+    { id: 1, nombre: "Lomito con Chimi", cantidad: 2, precioUnitario: 10.21 },
+    { id: 2, nombre: "Panchito", cantidad: 3, precioUnitario: 15.05 },
+    { id: 3, nombre: "Gaseosa", cantidad: 1, precioUnitario: 20.10 },
   ]);
 
   // Función para eliminar un producto del carrito
@@ -34,10 +34,21 @@ function SeccionCarritoPedido({ onTotalChange, onCarritoChange }) {
     }, 0);
   }, [productos]);
 
+  // Función para formatear números con comas como separadores decimales
+  const formatNumberWithCommas = (number) => {
+    return number.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
+
   // Efecto secundario para actualizar el total cuando cambian los productos en el carrito
   useEffect(() => {
-    const total = calcularTotal();
+    const total = parseFloat(calcularTotal().toFixed(2));
     onTotalChange(total);
+
+    console.log(total)
 
     // Notificamos al componente padre si el carrito está vacío o no
     onCarritoChange(productos.length === 0);
@@ -114,10 +125,10 @@ function SeccionCarritoPedido({ onTotalChange, onCarritoChange }) {
                     {producto.cantidad}
                   </TableCell>
                   <TableCell style={{ textAlign: "center" }}>
-                    ${producto.precioUnitario}
+                  ${formatNumberWithCommas(producto.precioUnitario)}
                   </TableCell>
                   <TableCell style={{ textAlign: "center" }}>
-                    ${producto.cantidad * producto.precioUnitario}
+                  ${formatNumberWithCommas((producto.cantidad * producto.precioUnitario))}
                   </TableCell>
                   <TableCell style={{ textAlign: "center" }}>
                     <IconButton
@@ -136,7 +147,7 @@ function SeccionCarritoPedido({ onTotalChange, onCarritoChange }) {
 
       {productos.length > 0 && (
         <Typography variant="h6" gutterBottom>
-          Total a abonar: ${calcularTotal()}
+          Total a abonar: ${formatNumberWithCommas(parseFloat(calcularTotal().toFixed(2)))}
         </Typography>
       )}
     </Paper>
