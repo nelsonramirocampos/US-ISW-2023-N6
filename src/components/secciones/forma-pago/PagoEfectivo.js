@@ -4,7 +4,7 @@ import { NumericFormat } from "react-number-format";
 
 function PagoEfectivo({ total, onAmountValidChange }) {
   // Estado local para el monto y el error del monto
-  const [amount, setAmount] = useState('0');
+  const [amount, setAmount] = useState('');
   const [amountError, setAmountError] = useState('');
   const [, setIsAmountValid] = useState(false); // Nuevo estado para indicar si el monto es válido
 
