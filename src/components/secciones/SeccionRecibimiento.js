@@ -17,8 +17,19 @@ function SeccionRecibimiento({ onChangeDate }) {
   // Estados para manejar la lógica del componente
   const [isDatePickerEnabled, setIsDatePickerEnabled] = useState(false); // Estado para habilitar/deshabilitar el DatePicker
   const [selectedDate, setSelectedDate] = useState(dayjs()); // Inicializar con la fecha actual
-  const [selectedHour, setSelectedHour] = useState(8); // Estado para almacenar la hora seleccionada (inicializada en 8)
   const [errorMessage, setErrorMessage] = useState(""); // Estado para el mensaje de error
+
+
+  const getDefaultHour = () => {
+    if (selectedDate.isSame(dayjs(), "day") && dayjs().hour() < 21) {
+      return dayjs().hour() + 3;
+    } else {
+      return 8;
+    }
+  };
+
+  const [selectedHour, setSelectedHour] = useState(getDefaultHour()); // Estado para almacenar la hora seleccionada
+
 
   // Función para manejar el cambio de opción en el RadioGroup
   const handleRadioChange = (event) => {
@@ -27,10 +38,24 @@ function SeccionRecibimiento({ onChangeDate }) {
     onChangeDate(event.target.value !== "enable");
   };
 
+
+  // Función para establecer la hora por defecto (08:00) al cambiar la fecha
+  const setDefaultHour = () => {
+    if(selectedDate.isSame(dayjs(), "day")){
+      setSelectedHour(8);
+    }
+    else
+    {
+      setSelectedHour(dayjs().hour() + 3);
+    }
+    
+  };
+
   // Función para manejar el cambio de fecha en el DatePicker
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
     setErrorMessage(""); // Reiniciar el mensaje de error al cambiar la fecha
+    setDefaultHour(); // Llama a la función para establecer la hora por defecto
   };
 
   // Función para manejar el cambio de hora en el Select
@@ -127,9 +152,9 @@ function SeccionRecibimiento({ onChangeDate }) {
               inputFormat="DD-MM-YYYY"
               value={selectedDate}
               onChange={handleDateChange}
-              required
               style={{ marginRight: "10px" }} // Añade margen derecho para separar los componentes
-            />
+              required // Agregar el atributo required
+/>
 
             {/* Mostrar el mensaje de error si existe */}
             {errorMessage ? (
@@ -147,6 +172,7 @@ function SeccionRecibimiento({ onChangeDate }) {
                   value={selectedHour}
                   onChange={handleHourChange}
                   style={{ minWidth: "120px" }}
+                  required // Agregar el atributo required
                 >
                   {generateHours().map((hour) => (
                     <MenuItem key={hour} value={hour}>
