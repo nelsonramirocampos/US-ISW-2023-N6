@@ -1,26 +1,27 @@
-import React, { useState } from 'react'; // Importa React y useState desde React
-import Button from '@mui/material/Button'; // Importa el componente Button desde la biblioteca Material-UI
-import Grid from '@mui/material/Grid'; // Importa el componente Grid desde la biblioteca Material-UI
-import Typography from '@mui/material/Typography'; // Importa el componente Typography desde la biblioteca Material-UI
-import Box from '@mui/material/Box'; // Importa el componente Box desde la biblioteca Material-UI
-import FormaPago from './secciones/forma-pago/SeccionFormaPago'; // Importa un componente llamado FormaPago desde una ubicación relativa
-import DatosEnvio from './secciones/SeccionDatosEnvio'; // Importa un componente llamado DatosEnvio desde una ubicación relativa
-import PedidoConfirmado from './PedidoConfirmado'; // Importa un componente llamado PedidoConfirmado desde una ubicación relativa
-import SeccionRecibimiento from './secciones/SeccionRecibimiento'; // Importa un componente llamado SeccionRecibimiento desde una ubicación relativa
-import SeccionCarritoPedido from './secciones/SeccionCarritoPedido'; // Importa un componente llamado SeccionCarritoPedido desde una ubicación relativa
-import CamposErroneos from './CamposErroneos'; // Importa un componente llamado CamposErroneos desde una ubicación relativa
+import React, { useState } from 'react';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import FormaPago from './secciones/forma-pago/SeccionFormaPago';
+import DatosEnvio from './secciones/SeccionDatosEnvio';
+import PedidoConfirmado from './PedidoConfirmado';
+import SeccionRecibimiento from './secciones/SeccionRecibimiento';
+import SeccionCarritoPedido from './secciones/SeccionCarritoPedido';
+import CamposErroneos from './CamposErroneos';
 
 function Formulario() {
-  const [isPaymentDataValid, setIsPaymentDataValid] = useState(false); // Estado para rastrear si los datos de pago son válidos
-  const [isShippingDataValid, setIsShippingDataValid] = useState(false); // Estado para rastrear si los datos de envío son válidos
-  const [total, setTotal] = useState(0); // Estado para rastrear el total del pedido
-  const [dialogOpen, setDialogOpen] = useState(false); // Estado para controlar si el diálogo de confirmación está abierto
-  const [pedidoConfirmado, ] = useState(false); // Estado para rastrear si el pedido está confirmado
-  const [carritoVacio, setCarritoVacio] = useState(true); // Estado para rastrear si el carrito de compras está vacío
-  const [hasErrors, setHasErrors] = useState(false); // Estado para rastrear si hay errores en el formulario
-  const [isDateValid, setIsDateValid] = useState(false); // Estado para rastrear si los datos de envío son válidos
+  // Estados iniciales
+  const [isPaymentDataValid, setIsPaymentDataValid] = useState(false);
+  const [isShippingDataValid, setIsShippingDataValid] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [pedidoConfirmado, ] = useState(false);
+  const [carritoVacio, setCarritoVacio] = useState(true);
+  const [hasErrors, setHasErrors] = useState(false);
+  const [isDateValid, setIsDateValid] = useState(true);
 
-
+  // Funciones para controlar cambios en los datos
   const handlePaymentDataChange = (isValid) => {
     setIsPaymentDataValid(isValid);
   };
@@ -32,7 +33,6 @@ function Formulario() {
   const handleDateChange = (isValid) => {
     setIsDateValid(isValid);
   };
-
 
   const handleOpenDialog = () => {
     setDialogOpen(true);
@@ -47,21 +47,20 @@ function Formulario() {
   };
 
   const handleCloseDialog = () => {
+    // Cuando se cierra el diálogo, se restablecen los estados de validación
     setIsPaymentDataValid(false);
     setIsShippingDataValid(false);
     setDialogOpen(false);
-    //window.location.reload(); // Recarga la página al cerrar el diálogo de confirmación
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Evita la recarga de la página
+    e.preventDefault();
 
-    // Realiza las acciones necesarias, por ejemplo, muestra un mensaje de confirmación
+    // Validación antes de abrir el diálogo de confirmación
     if (isPaymentDataValid && isShippingDataValid && !carritoVacio && isDateValid) {
-      handleOpenDialog();
+      handleOpenDialog(); // Abre el diálogo de confirmación si todo es válido
     } else {
-
-      setHasErrors(true); // Establece hasErrors en true si hay errores en los datos del formulario
+      setHasErrors(true); // Muestra errores si alguna validación falla
     }
   };
 
