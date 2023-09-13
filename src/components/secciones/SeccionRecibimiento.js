@@ -51,7 +51,7 @@ function SeccionRecibimiento({ onChangeDate }) {
     if (selectedDate.isSame(dayjs(), 'day')) {
       // Si la fecha seleccionada es igual a la fecha actual
       // y la hora actual es antes de las 21:00 horas
-      if (dayjs().hour() >= 21) {
+      if (dayjs().hour() >= 9) {
         // Establecer un mensaje de error
         setErrorMessage("Debe programar otra fecha y hora ya que el Delivery no se encuentra disponible después de las 21:00hs");
         return [];
@@ -128,29 +128,31 @@ function SeccionRecibimiento({ onChangeDate }) {
               style={{ marginRight: '10px' }} // Añade margen derecho para separar los componentes
             />
             
-            {/* Mostrar el mensaje de error si existe */}
-            {errorMessage ? (
-              <Typography variant="body2" color="error">
-                {errorMessage}
-              </Typography>
-            ) : (
-              /* Select para elegir la hora de entrega */
-              <FormControl style={{ minWidth: '120px' }}>
-                <InputLabel>Hora de Entrega</InputLabel>
-                <Select
-                  label='Hora de Entrega'
-                  value={selectedHour}
-                  onChange={handleHourChange}
-                  style={{ minWidth: '120px' }}
-                >
-                  {generateHours().map((hour) => (
-                    <MenuItem key={hour} value={hour}>
-                      {hour < 10 ? `0${hour}:00` : `${hour}:00`}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
+{/* Mostrar el mensaje de error si existe */}
+{errorMessage ? (
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <Typography variant="body2" color="error">
+      {errorMessage}
+    </Typography>
+  </div>
+) : (
+  /* Select para elegir la hora de entrega */
+  <FormControl style={{ minWidth: '120px' }}>
+    <InputLabel>Hora de Entrega</InputLabel>
+    <Select
+      label='Hora de Entrega'
+      value={selectedHour}
+      onChange={handleHourChange}
+      style={{ minWidth: '120px' }}
+    >
+      {generateHours().map((hour) => (
+        <MenuItem key={hour} value={hour}>
+          {hour < 10 ? `0${hour}:00` : `${hour}:00`}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+)}
           </div>
         )}
       </LocalizationProvider>
