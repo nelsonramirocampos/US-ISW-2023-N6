@@ -79,7 +79,7 @@ export default function SeccionRecibimiento() {
     if (generateHours().length > 0) {
       setSelectedHour(generateHours()[0]);
     }
-  }, [selectedDate]);
+  }, [selectedDate]); // eslint-disable-line
 
   return (
     <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#a3bac3' }}>
