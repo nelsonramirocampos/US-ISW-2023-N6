@@ -11,6 +11,7 @@ import SeccionCarritoPedido from './secciones/SeccionCarritoPedido';
 import CamposErroneos from './CamposErroneos';
 
 function Formulario() {
+  // Estados iniciales
   const [isPaymentDataValid, setIsPaymentDataValid] = useState(false);
   const [isShippingDataValid, setIsShippingDataValid] = useState(false);
   const [total, setTotal] = useState(0);
@@ -20,6 +21,7 @@ function Formulario() {
   const [hasErrors, setHasErrors] = useState(false);
   const [isDateValid, setIsDateValid] = useState(true);
 
+  // Funciones para controlar cambios en los datos
   const handlePaymentDataChange = (isValid) => {
     setIsPaymentDataValid(isValid);
   };
@@ -45,6 +47,7 @@ function Formulario() {
   };
 
   const handleCloseDialog = () => {
+    // Cuando se cierra el diálogo, se restablecen los estados de validación
     setIsPaymentDataValid(false);
     setIsShippingDataValid(false);
     setDialogOpen(false);
@@ -53,10 +56,11 @@ function Formulario() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Validación antes de abrir el diálogo de confirmación
     if (isPaymentDataValid && isShippingDataValid && !carritoVacio && isDateValid) {
-      handleOpenDialog();
+      handleOpenDialog(); // Abre el diálogo de confirmación si todo es válido
     } else {
-      setHasErrors(true);
+      setHasErrors(true); // Muestra errores si alguna validación falla
     }
   };
 
