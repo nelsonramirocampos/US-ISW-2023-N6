@@ -61,7 +61,7 @@ function CamposErroneos(props) {
           <span style={textoRojoStyle}>Por favor, verifica los campos con errores.</span>
         </DialogContentText>
         <DialogContentText id="campos-erroneos-dialog-description-dos">
-          <span style={textoRojoStyle}>Corrige los errores antes de continuar.</span>
+          <span style={textoRojoStyle}>Corrija los errores antes de confirmar el pedido.</span>
         </DialogContentText>
       </DialogContent>
       <Button onClick={onClose} color="primary" variant="contained" fullWidth style={{ backgroundColor: '#006989' }}>
