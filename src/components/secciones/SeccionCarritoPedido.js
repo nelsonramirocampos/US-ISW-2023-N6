@@ -48,8 +48,6 @@ function SeccionCarritoPedido({ onTotalChange, onCarritoChange }) {
     const total = parseFloat(calcularTotal().toFixed(2));
     onTotalChange(total);
 
-    console.log(total)
-
     // Notificamos al componente padre si el carrito está vacío o no
     onCarritoChange(productos.length === 0);
   }, [productos, onTotalChange, calcularTotal, onCarritoChange]);
