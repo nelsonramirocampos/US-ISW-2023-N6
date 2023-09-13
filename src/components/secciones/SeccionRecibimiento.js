@@ -13,7 +13,7 @@ import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
-export default function SeccionRecibimiento() {
+function SeccionRecibimiento({ onChangeDate }) {
   // Estados para manejar la lógica del componente
   const [isDatePickerEnabled, setIsDatePickerEnabled] = useState(false); // Estado para habilitar/deshabilitar el DatePicker
   const [selectedDate, setSelectedDate] = useState(dayjs()); // Inicializar con la fecha actual
@@ -52,8 +52,8 @@ export default function SeccionRecibimiento() {
       // Si la fecha seleccionada es igual a la fecha actual
       // y la hora actual es antes de las 21:00 horas
       if (dayjs().hour() >= 21) {
-        // Establecer un mensaje de error y retornar un arreglo vacío
-        setErrorMessage("Debe programar otra fecha y hora ya que el Delivery no se encuentra disponible despues de las 21:00hs");
+        // Establecer un mensaje de error
+        setErrorMessage("Debe programar otra fecha y hora ya que el Delivery no se encuentra disponible después de las 21:00hs");
         return [];
       } else {
         // Mostrar las horas a partir de la hora actual más tres horas
@@ -75,11 +75,14 @@ export default function SeccionRecibimiento() {
   const hoursArray = Array.from({ length: 23 - 8 + 1 }, (_, i) => i + 8);
 
   useEffect(() => {
+    // Llamar a onChangeDate después del renderizado
+    onChangeDate(generateHours().length > 0);
+    
     // Establece el valor por defecto en el Select
     if (generateHours().length > 0) {
       setSelectedHour(generateHours()[0]);
     }
-  }, [selectedDate]); // eslint-disable-line
+  }, [selectedDate, onChangeDate]); // eslint-disable-line
 
   return (
     <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#a3bac3' }}>
@@ -154,3 +157,5 @@ export default function SeccionRecibimiento() {
     </Paper>
   );
 }
+
+export default SeccionRecibimiento;
