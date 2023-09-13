@@ -119,7 +119,7 @@ const handleCalleChange = (e) => {
             fullWidth
             type="text"
             value={numero}
-            onChange={(e) => setNumero(e.target.value.replace(/\D/g, '').slice(0, 6))}
+            onChange={(e) => setNumero(e.target.value.replace(/\D/g, '').slice(0, 4))}
             onBlur={handleNumeroBlur}
             error={Boolean(numeroError)}
             helperText={numeroError}
