@@ -20,10 +20,10 @@ function SeccionRecibimiento({ onChangeDate }) {
   const [selectedHour, setSelectedHour] = useState(8); // Estado para almacenar la hora seleccionada (inicializada en 8)
   const [errorMessage, setErrorMessage] = useState(""); // Estado para el mensaje de error
 
-  // Función para manejar el cambio de opción en el RadioGroup
-  const handleRadioChange = (event) => {
-    setIsDatePickerEnabled(event.target.value === 'enable');
-  };
+// Función para manejar el cambio de opción en el RadioGroup
+const handleRadioChange = (event) => {
+  setIsDatePickerEnabled(event.target.value === 'enable');
+};
 
   // Función para manejar el cambio de fecha en el DatePicker
   const handleDateChange = (newDate) => {
@@ -52,10 +52,13 @@ function SeccionRecibimiento({ onChangeDate }) {
       // Si la fecha seleccionada es igual a la fecha actual
       // y la hora actual es antes de las 21:00 horas
       if (dayjs().hour() >= 9) {
+        onChangeDate(false);
         // Establecer un mensaje de error
         setErrorMessage("Debe programar otra fecha y hora ya que el Delivery no se encuentra disponible después de las 21:00hs");
         return [];
       } else {
+        onChangeDate(true);
+
         // Mostrar las horas a partir de la hora actual más tres horas
         // y hasta las 23:00 horas
         const currentHour = dayjs().hour();
@@ -66,6 +69,7 @@ function SeccionRecibimiento({ onChangeDate }) {
         return availableHours;
       }
     } else {
+      onChangeDate(true);
       // Si la fecha seleccionada es diferente de la fecha actual
       // Mostrar todas las horas de 8 a 23
       return hoursArray;
@@ -74,15 +78,6 @@ function SeccionRecibimiento({ onChangeDate }) {
 
   const hoursArray = Array.from({ length: 23 - 8 + 1 }, (_, i) => i + 8);
 
-  useEffect(() => {
-    // Llamar a onChangeDate después del renderizado
-    onChangeDate(generateHours().length > 0);
-    
-    // Establece el valor por defecto en el Select
-    if (generateHours().length > 0) {
-      setSelectedHour(generateHours()[0]);
-    }
-  }, [selectedDate, onChangeDate]); // eslint-disable-line
 
   return (
     <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#a3bac3' }}>
