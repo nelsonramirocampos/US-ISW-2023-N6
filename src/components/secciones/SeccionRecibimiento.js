@@ -51,7 +51,7 @@ export default function SeccionRecibimiento() {
     if (selectedDate.isSame(dayjs(), 'day')) {
       // Si la fecha seleccionada es igual a la fecha actual
       // y la hora actual es antes de las 21:00 horas
-      if (dayjs().hour() >= 9) {
+      if (dayjs().hour() >= 21) {
         // Establecer un mensaje de error y retornar un arreglo vacío
         setErrorMessage("Debe programar otra fecha y hora ya que el Delivery no se encuentra disponible despues de las 21:00hs");
         return [];
