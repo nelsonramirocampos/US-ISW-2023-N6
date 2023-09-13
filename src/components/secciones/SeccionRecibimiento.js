@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useState } from 'react';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -14,11 +13,9 @@ import dayjs from "dayjs";
 import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 
 function SeccionRecibimiento({ onChangeDate }) {
-  // Estados para manejar la lógica del componente
-  const [isDatePickerEnabled, setIsDatePickerEnabled] = useState(false); // Estado para habilitar/deshabilitar el DatePicker
-  const [selectedDate, setSelectedDate] = useState(dayjs()); // Inicializar con la fecha actual
-  const [errorMessage, setErrorMessage] = useState(""); // Estado para el mensaje de error
-
+  const [isDatePickerEnabled, setIsDatePickerEnabled] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [errorMessage, setErrorMessage] = useState("");
 
   const getDefaultHour = () => {
     if (selectedDate.isSame(dayjs(), "day") && dayjs().hour() < 21) {
@@ -28,81 +25,58 @@ function SeccionRecibimiento({ onChangeDate }) {
     }
   };
 
-  const [selectedHour, setSelectedHour] = useState(getDefaultHour()); // Estado para almacenar la hora seleccionada
+  const [selectedHour, setSelectedHour] = useState(getDefaultHour());
 
 
-  // Función para manejar el cambio de opción en el RadioGroup
   const handleRadioChange = (event) => {
     setIsDatePickerEnabled(event.target.value === "enable");
-
     onChangeDate(event.target.value !== "enable");
   };
 
-
-  // Función para establecer la hora por defecto (08:00) al cambiar la fecha
   const setDefaultHour = () => {
-    if(selectedDate.isSame(dayjs(), "day")){
+    if (selectedDate.isSame(dayjs(), "day")) {
       setSelectedHour(8);
-    }
-    else
-    {
+    } else {
       setSelectedHour(dayjs().hour() + 3);
     }
-    
   };
 
-  // Función para manejar el cambio de fecha en el DatePicker
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
-    setErrorMessage(""); // Reiniciar el mensaje de error al cambiar la fecha
-    setDefaultHour(); // Llama a la función para establecer la hora por defecto
+    setErrorMessage("");
+    setDefaultHour();
+    const newHours = generateHours(newDate);
+    onChangeDate(true, newHours);
   };
 
-  // Función para manejar el cambio de hora en el Select
   const handleHourChange = (event) => {
     setSelectedHour(parseInt(event.target.value, 10));
   };
 
-  // Función para verificar si es domingo
   const isSunday = (date) => {
     return date.day() === 0;
   };
 
-  // Función para deshabilitar fechas (domingos en este caso)
   const shouldDisableDate = (date) => {
     return isSunday(date);
   };
 
-  // Genera un arreglo de horas
-  const generateHours = () => {
-    if (selectedDate.isSame(dayjs(), "day")) {
-      // Si la fecha seleccionada es igual a la fecha actual
-      // y la hora actual es antes de las 21:00 horas
-      if (dayjs().hour() >= 21) {
-        // Establecer un mensaje de error
+  const generateHours = (newDate) => {
+    if (newDate.isSame(dayjs(), "day")) {
+      if (dayjs().hour() >= 9) {
         setErrorMessage(
           "Debe programar otra fecha y hora ya que el Delivery no se encuentra disponible después de las 21:00hs"
         );
         return [];
       } else {
-        // Mostrar las horas a partir de la hora actual más tres horas
-        // y hasta las 23:00 horas
         const currentHour = dayjs().hour();
         const availableHours = [];
         for (let hour = currentHour + 3; hour <= 23; hour++) {
           availableHours.push(hour);
         }
-
-        onChangeDate(true);
-
         return availableHours;
       }
     } else {
-      // Si la fecha seleccionada es diferente de la fecha actual
-      // Mostrar todas las horas de 8 a 23
-
-      onChangeDate(true);
-
       return hoursArray;
     }
   };
@@ -110,16 +84,11 @@ function SeccionRecibimiento({ onChangeDate }) {
   const hoursArray = Array.from({ length: 23 - 8 + 1 }, (_, i) => i + 8);
 
   return (
-    <Paper
-      elevation={3}
-      style={{ padding: "16px", backgroundColor: "#a3bac3" }}
-    >
+    <Paper elevation={3} style={{ padding: "16px", backgroundColor: "#a3bac3" }}>
       <Typography variant="h5" gutterBottom>
         Elije cuando quieres la entrega
       </Typography>
       <Divider style={{ marginBottom: "20px" }} />
-
-      {/* RadioGroup para habilitar/deshabilitar el DatePicker */}
       <RadioGroup
         aria-label="DatePicker"
         name="datePickerControl"
@@ -137,26 +106,21 @@ function SeccionRecibimiento({ onChangeDate }) {
           label="Elegir cuando"
         />
       </RadioGroup>
-
-      {/* Componentes relacionados con la fecha y la hora */}
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
         {isDatePickerEnabled && (
           <div style={{ display: "flex", flexDirection: "row" }}>
-            {/* DatePicker para elegir la fecha de entrega */}
             <DatePicker
               label="Fecha de Entrega"
-              minDate={dayjs().add(0, "day")} // Fecha mínima, día de la fecha actual
-              maxDate={dayjs().add(7, "day")} // Fecha máxima, 7 días después de la fecha actual
+              minDate={dayjs().add(0, "day")}
+              maxDate={dayjs().add(7, "day")}
               disablePast
               shouldDisableDate={shouldDisableDate}
               inputFormat="DD-MM-YYYY"
               value={selectedDate}
               onChange={handleDateChange}
-              style={{ marginRight: "10px" }} // Añade margen derecho para separar los componentes
-              required // Agregar el atributo required
-/>
-
-            {/* Mostrar el mensaje de error si existe */}
+              style={{ marginRight: "10px" }}
+              required
+            />
             {errorMessage ? (
               <div style={{ display: "flex", alignItems: "center" }}>
                 <Typography variant="body2" color="error">
@@ -164,7 +128,6 @@ function SeccionRecibimiento({ onChangeDate }) {
                 </Typography>
               </div>
             ) : (
-              /* Select para elegir la hora de entrega */
               <FormControl style={{ minWidth: "120px" }}>
                 <InputLabel>Hora de Entrega</InputLabel>
                 <Select
@@ -172,9 +135,9 @@ function SeccionRecibimiento({ onChangeDate }) {
                   value={selectedHour}
                   onChange={handleHourChange}
                   style={{ minWidth: "120px" }}
-                  required // Agregar el atributo required
+                  required
                 >
-                  {generateHours().map((hour) => (
+                  {generateHours(selectedDate).map((hour) => (
                     <MenuItem key={hour} value={hour}>
                       {hour < 10 ? `0${hour}:00` : `${hour}:00`}
                     </MenuItem>
