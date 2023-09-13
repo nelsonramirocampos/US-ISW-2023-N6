@@ -18,6 +18,8 @@ function Formulario() {
   const [pedidoConfirmado, ] = useState(false); // Estado para rastrear si el pedido está confirmado
   const [carritoVacio, setCarritoVacio] = useState(true); // Estado para rastrear si el carrito de compras está vacío
   const [hasErrors, setHasErrors] = useState(false); // Estado para rastrear si hay errores en el formulario
+  const [isDateValid, setIsDateValid] = useState(false); // Estado para rastrear si los datos de envío son válidos
+
 
   const handlePaymentDataChange = (isValid) => {
     setIsPaymentDataValid(isValid);
@@ -26,6 +28,11 @@ function Formulario() {
   const handleShippingDataChange = (isValid) => {
     setIsShippingDataValid(isValid);
   };
+
+  const handleDateChange = (isValid) => {
+    setIsDateValid(isValid);
+  };
+
 
   const handleOpenDialog = () => {
     setDialogOpen(true);
@@ -43,14 +50,14 @@ function Formulario() {
     setIsPaymentDataValid(false);
     setIsShippingDataValid(false);
     setDialogOpen(false);
-    window.location.reload(); // Recarga la página al cerrar el diálogo de confirmación
+    //window.location.reload(); // Recarga la página al cerrar el diálogo de confirmación
   };
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Evita la recarga de la página
 
     // Realiza las acciones necesarias, por ejemplo, muestra un mensaje de confirmación
-    if (isPaymentDataValid && isShippingDataValid && !carritoVacio) {
+    if (isPaymentDataValid && isShippingDataValid && !carritoVacio && isDateValid) {
       handleOpenDialog();
     } else {
 
@@ -84,7 +91,7 @@ function Formulario() {
               )}
             </Grid>
             <Grid item xs={12} sx={{ marginTop: '20px', marginBottom: '20px' }}>
-              <SeccionRecibimiento />
+              <SeccionRecibimiento onChangeDate={handleDateChange}/>
             </Grid>
             <Grid item xs={12} sx={{ marginTop: '20px', marginBottom: '20px' }}>
               <FormaPago onChangeFormaPago={handlePaymentDataChange} total={total} />
