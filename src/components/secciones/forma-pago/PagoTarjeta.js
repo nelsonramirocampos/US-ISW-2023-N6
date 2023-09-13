@@ -15,23 +15,43 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
   const [expiryYearError, setExpiryYearError] = useState('');
   const [cvvError, setCvvError] = useState('');
 
-    // Función para validar si la tarjeta está vencida con respecto a la fecha actual
-    const validateExpiryDate = () => {
-      const currentYear = new Date().getFullYear();
-      const currentMonth = new Date().getMonth() + 1; // Meses van de 0 a 11, sumamos 1
+  const validateExpiryDate = () => {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1; // Meses van de 0 a 11, sumamos 1
   
-      const enteredYearInt = parseInt(expiryYear, 10);
-      const enteredMonthInt = parseInt(expiryMonth, 10);
+    const enteredYearInt = parseInt(expiryYear, 10);
+    const enteredMonthInt = parseInt(expiryMonth, 10);
   
-      if (enteredYearInt < currentYear || (enteredYearInt === currentYear && enteredMonthInt < currentMonth)) {
-        setExpiryYearError('La tarjeta está vencida');
-        setExpiryMonthError('La tarjeta está vencida');
-      } else {
-        setExpiryYearError('');
-        setExpiryMonthError('');
-      }
-    };
-
+    let hasError = false;
+  
+    if (enteredMonthInt < 1 || enteredMonthInt > 12) {
+      setExpiryMonthError('El mes debe estar en el rango de 01-12');
+      hasError = true;
+    } else {
+      setExpiryMonthError('');
+    }
+  
+    if (enteredYearInt < currentYear) {
+      setExpiryYearError('La tarjeta está vencida');
+      hasError = true;
+    } else {
+      setExpiryYearError('');
+    }
+  
+    if (enteredYearInt === currentYear && enteredMonthInt < currentMonth) {
+      setExpiryYearError('La tarjeta está vencida');
+      setExpiryMonthError('La tarjeta está vencida');
+      hasError = true;
+    }
+  
+    if (!hasError) {
+      setExpiryYearError('');
+      setExpiryMonthError('');
+    }
+  };
+  
+  
+    
     
     
 
@@ -135,11 +155,11 @@ function PagoTarjeta({ onPaymentDataValidChange }) {
   // Función para validar si todos los campos son válidos y llama a la función del padre
   const validateData = () => {
     onPaymentDataValidChange(
-      (cardNumber !== '' && cardNumber[0] === '4') &&
-      cardName !== '' &&
-      expiryMonth !== '' &&
-      expiryYear !== '' &&
-      cvv !== ''
+      !Boolean(cardNumberError) &&
+      !Boolean(cardNameError) &&
+      !Boolean(expiryMonthError) &&
+      !Boolean(expiryYearError) &&
+      !Boolean(cvvError)
     );
   };
 
