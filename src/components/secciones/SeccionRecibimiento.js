@@ -53,7 +53,7 @@ export default function SeccionRecibimiento() {
       // y la hora actual es antes de las 21:00 horas
       if (dayjs().hour() >= 9) {
         // Establecer un mensaje de error y retornar un arreglo vacío
-        setErrorMessage("Debe programar otra fecha y hora ya que el Delivery no se encuentra disponible despues te las 21:00hs");
+        setErrorMessage("Debe programar otra fecha y hora ya que el Delivery no se encuentra disponible despues de las 21:00hs");
         return [];
       } else {
         // Mostrar las horas a partir de la hora actual más tres horas
