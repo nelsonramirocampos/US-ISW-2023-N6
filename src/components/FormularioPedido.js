@@ -52,7 +52,7 @@ function Formulario() {
     setIsShippingDataValid(false);
     setDialogOpen(false);
     
-    //window.location.reload(); // Recarga la página al cerrar el diálogo de confirmación
+    window.location.reload(); // Recarga la página al cerrar el diálogo de confirmación
   };
 
   const handleSubmit = (e) => {
